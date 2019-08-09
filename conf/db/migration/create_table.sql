@@ -36,6 +36,7 @@ CREATE TABLE "applicant_post" (
   "category_id_1" INT        DEFAULT NULL,
   "category_id_2" INT        DEFAULT NULL,
   "category_id_3" INT        DEFAULT NULL,
+  "done"        BOOLEAN      DEFAULT false,
   "free_date"    DATE   NOT NULL,
   "updated_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   "created_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP

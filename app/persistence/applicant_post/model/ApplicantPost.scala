@@ -10,16 +10,27 @@ package persistence.applicant_post.model
 import play.api.data._
 import play.api.data.Forms._
 import java.time.LocalDateTime
+import java.time.LocalDate
+
 import persistence.geo.model.Location
+import persistence.applicant.model.Applicant
+import persistence.category.model.Category
+
 
 // 施設情報 (sample)
 //~~~~~~~~~~~~~
 case class ApplicantPost(
   id:          Option[ApplicantPost.Id],                // 施設ID
+  applicantId: Applicant.Id,
   locationId:  Location.Id,                        // 地域ID
-  name:        String,                             // 施設名
-  address:     String,                             // 住所(詳細)
+  title:       String,                             // 施設名
+  destination: String,                             // 住所(詳細)
   description: String,                             // 施設説明
+  done: Boolean,
+  free_date: LocalDate,
+  categoryId1: Category.Id,
+  categoryId2: Category.Id,
+  categoryId3: Category.Id,
   updatedAt:   LocalDateTime = LocalDateTime.now,  // データ更新日
   createdAt:   LocalDateTime = LocalDateTime.now   // データ作成日
 )
