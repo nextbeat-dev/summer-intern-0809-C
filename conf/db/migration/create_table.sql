@@ -74,7 +74,7 @@ CREATE TABLE "applicant_feedback_log" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   "employer_id" INT          NOT NULL,
   "applicant_id"INT          NOT NULL,
-  "score"       TEXT         DEFAULT NULL,
+  "score"       Int         DEFAULT NULL,
   "updated_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   "created_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
@@ -84,7 +84,7 @@ CREATE TABLE "employer_feedback_log" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   "employer_id" INT          NOT NULL,
   "applicant_id"INT          NOT NULL,
-  "score"       TEXT         DEFAULT NULL,
+  "score"       Int         DEFAULT NULL,
   "updated_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   "created_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
