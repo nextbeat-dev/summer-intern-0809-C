@@ -3,7 +3,7 @@ package controllers.facility
 
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
-import persistence.facility.model.Facility.formForFacilitySearch
+import persistence.applicant.model.Applicant.formForNewApplicant
 
 import model.component.util.ViewValuePageLayout
 import model.site.app.SiteViewValueApplicant
@@ -12,7 +12,7 @@ import persistence.udb.dao.UserDAO
 import scala.concurrent.Future
 
 
-// 施設
+// ログイン
 //~~~~~~~~~~~~~~~~~~~~~
 class LoginController @javax.inject.Inject()(
   val userDAO: UserDAO,
@@ -23,14 +23,11 @@ class LoginController @javax.inject.Inject()(
   /**
     * ログイン画面
     */
-  def login = Action.async { implicit request =>
-    for {
-      _ <- Future.successful()
-    } yield {
-      val vv = SiteViewValueApplicant(
-        layout     = ViewValuePageLayout(id = request.uri)
-      )
-      Ok(views.html.site.login.applicant.Main(vv, formForFacilitySearch))
-    }
-  }
+  def login = Action.async { implicit request => {
+    val vv = SiteViewValueApplicant(
+      layout = ViewValuePageLayout(id = request.uri)
+    )
+    Future(Ok(views.html.site.login.applicant.Main(vv, formForNewApplicant)))
+  }}
+
 }

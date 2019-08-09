@@ -5,8 +5,8 @@
  * please view the LICENSE file that was distributed with this source code.
  *@
 
-@import model.site.app.SiteViewValueNewUser
-@import persistence.udb.model.User
+@import model.site.app.SiteViewValueApplicant
+@import persistence.applicant.model.Applicant
 @import play.api.data.Form
 
 @** 応募者ログインフォーム *@
@@ -20,5 +20,5 @@
 
 @** テンプレート: コンテンツ *@
 @tplContent = {
-  @views.html.site.app.login._Form(vv, form)
+  @views.html.site.login.applicant._Form(vv, form)
 }
