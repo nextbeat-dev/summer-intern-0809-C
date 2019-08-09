@@ -43,16 +43,6 @@ class ApplicantFeedbackLogDAO @javax.inject.Inject()(
       slick.result
     }
 
-  /**
-   * 地域から施設を取得
-   * 検索業件: ロケーションID
-   */
-  def filterByLocationIds(locationIds: Seq[Location.Id]): Future[Seq[ApplicantFeedbackLog]] =
-    db.run {
-      slick
-        .filter(_.locationId inSet locationIds)
-        .result
-    }
 
   // --[ テーブル定義 ] --------------------------------------------------------
   class ApplicantFeedbackLogTable(tag: Tag) extends Table[ApplicantFeedbackLog](tag, "applicant_feedback_log") {

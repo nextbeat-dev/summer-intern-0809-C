@@ -25,12 +25,12 @@ case class ApplicantPost(
   locationId:  Location.Id,                        // 地域ID
   title:       String,                             // 施設名
   destination: String,                             // 住所(詳細)
-  description: String,                             // 施設説明
-  done: Boolean,
-  free_date: LocalDate,
+  description: String,                             // 施設説明    
   categoryId1: Category.Id,
   categoryId2: Category.Id,
   categoryId3: Category.Id,
+  done: Boolean,
+  free_date: LocalDate,
   updatedAt:   LocalDateTime = LocalDateTime.now,  // データ更新日
   createdAt:   LocalDateTime = LocalDateTime.now   // データ作成日
 )

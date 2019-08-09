@@ -85,7 +85,7 @@ class EmployerPostDAO @javax.inject.Inject()(
       (EmployerPost.apply _).tupled,
       /** The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => EmployerPost.unapply(v).map(_.copy(
-        _12 = LocalDateTime.now
+        _15 = LocalDateTime.now
       ))
     )
   }

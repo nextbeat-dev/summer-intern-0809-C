@@ -8,6 +8,8 @@ import slick.jdbc.JdbcProfile
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 
+import persistence.category.model.Category
+
 
 class CategoryDAO @javax.inject.Inject()(
   val dbConfigProvider: DatabaseConfigProvider

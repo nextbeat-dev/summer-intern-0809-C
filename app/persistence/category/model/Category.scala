@@ -1,4 +1,4 @@
-package persistence.applicant_post.model
+package persistence.category.model
 
 import play.api.data._
 import play.api.data.Forms._
