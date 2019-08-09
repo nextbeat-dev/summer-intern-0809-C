@@ -12,15 +12,14 @@ import java.time.LocalDateTime
 // 施設情報 (sample)
 //~~~~~~~~~~~~~
 case class LoginApplicant(
-  id:        Option[LoginApplicant.Id],
-  aid:       Applicant.Id,  //応募者のID
-  password:  String,                //パスワード
+  id:        Option[LoginApplicant.Id],          //ID
+  aid:       Applicant.Id,                       //応募者のID
+  password:  String,                             //パスワード
   updatedAt: LocalDateTime = LocalDateTime.now,  // データ更新日
   createdAt: LocalDateTime = LocalDateTime.now   // データ作成日
 )
 
 object LoginApplicant {
-
   // --[ 管理ID ]---------------------------------------------------------------
   type Id = Long
 }

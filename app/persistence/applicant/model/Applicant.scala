@@ -20,6 +20,7 @@ case class Applicant(
   name:        String,                             // 施設名
   address:     String,                             // 住所(詳細)
   email:       String,                             // メールアドレス
+  password:    String,                             // パスワード
   phone:       String,                             // 電話番号
   description: String,                             // 施設説明
   image:       String,                             // 施設説明
@@ -40,10 +41,11 @@ object Applicant {
     name: String,
     address: String,
     email: String,
+    password: String,
     phone: String,
     description: String,
     image: String,
-  ): Applicant = Applicant(None, locationId, name, address, email, phone, description, image, 0)
+  ): Applicant = Applicant(None, locationId, name, address, email, password, phone, description, image, 0)
 
   // --[ フォーム定義 ]---------------------------------------------------------
   val formForNewApplicant = Form(
@@ -52,11 +54,12 @@ object Applicant {
       "name"        -> nonEmptyText,
       "address"     -> nonEmptyText,
       "email"     -> nonEmptyText,
+      "password"  -> nonEmptyText,
       "phone"     -> nonEmptyText,
       "description"     -> nonEmptyText,
       "image"     -> nonEmptyText,
     )(Applicant.applyForm)(Applicant.unapply(_).map(
-      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8)
+      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9)
     ))
   )
 

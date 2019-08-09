@@ -3,6 +3,7 @@ package persistence.applicant.dao
 import java.time.LocalDateTime
 
 import persistence.applicant.model.{Applicant, LoginApplicant}
+import persistence.udb.model.User
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
@@ -19,6 +20,22 @@ class LoginApplicantDAO @javax.inject.Inject()(
   lazy val slick = TableQuery[LoginApplicantTable]
 
   // --[ データ処理定義 ] ------------------------------------------------------
+
+  /**
+    * ユーザ情報を追加する
+    */
+  def add(data: LoginApplicant): Future[LoginApplicant.Id] = {
+    println(data)
+    db.run {
+      data.id match {
+        case None => slick returning slick.map(_.id) += data
+        case Some(_) => DBIO.failed(
+          new IllegalArgumentException("The given object is already assigned id.")
+        )
+      }
+    }
+  }
+
   /**
    * 施設を取得
    */
@@ -35,11 +52,11 @@ class LoginApplicantDAO @javax.inject.Inject()(
 
 
     // Table's columns
-    def id          = column[LoginApplicant.Id]("id", O.PrimaryKey, O.AutoInc)
-    def aid             = column[Applicant.Id]    ("aid", O.Unique, O.AutoInc)
-    def password            = column[String]         ("password")
-    def updatedAt     = column[LocalDateTime]  ("updated_at")
-    def createdAt     = column[LocalDateTime]  ("created_at")
+    def id        = column[LoginApplicant.Id]("id", O.PrimaryKey, O.AutoInc)
+    def aid       = column[Applicant.Id]    ("aid", O.AutoInc)
+    def password  = column[String]         ("password")
+    def updatedAt = column[LocalDateTime]  ("updated_at")
+    def createdAt = column[LocalDateTime]  ("created_at")
 
     def ukey01 = index("ukey01", aid, unique = true)
 
