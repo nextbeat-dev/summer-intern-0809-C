@@ -1,4 +1,4 @@
-CREATE TABLE "login_applicant" (
+CREATE TABLE "applicant_login" (
   "id"         BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   "aid"        BIGINT(20) UNSIGNED NOT NULL,
   "password"   VARCHAR(255) NOT NULL,

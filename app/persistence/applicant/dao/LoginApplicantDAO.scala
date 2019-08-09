@@ -25,7 +25,6 @@ class LoginApplicantDAO @javax.inject.Inject()(
     * ユーザ情報を追加する
     */
   def add(data: LoginApplicant): Future[LoginApplicant.Id] = {
-    println(data)
     db.run {
       data.id match {
         case None => slick returning slick.map(_.id) += data
@@ -48,12 +47,12 @@ class LoginApplicantDAO @javax.inject.Inject()(
 
 
   // --[ テーブル定義 ] --------------------------------------------------------
-  class LoginApplicantTable(tag: Tag) extends Table[LoginApplicant](tag, "login_applicant") {
+  class LoginApplicantTable(tag: Tag) extends Table[LoginApplicant](tag, "applicant_login") {
 
 
     // Table's columns
     def id        = column[LoginApplicant.Id]("id", O.PrimaryKey, O.AutoInc)
-    def aid       = column[Applicant.Id]    ("aid", O.AutoInc)
+    def aid       = column[Applicant.Id]    ("aid")
     def password  = column[String]         ("password")
     def updatedAt = column[LocalDateTime]  ("updated_at")
     def createdAt = column[LocalDateTime]  ("created_at")
@@ -68,7 +67,7 @@ class LoginApplicantDAO @javax.inject.Inject()(
       (LoginApplicant.apply _).tupled,
       /** The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => LoginApplicant.unapply(v).map(_.copy(
-        _5 = LocalDateTime.now
+        _4 = LocalDateTime.now
       ))
     )
   }

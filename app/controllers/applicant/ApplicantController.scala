@@ -60,7 +60,6 @@ class ApplicantController @javax.inject.Inject()(
         }
       },
       applicant   => {
-        println(applicant.password)
         for {
           aid <- daoApplicant.add(applicant)
           _   <- daoLoginApplicant.add(LoginApplicant(id = None, aid = aid, password = applicant.password))
