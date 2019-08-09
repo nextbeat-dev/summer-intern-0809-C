@@ -14,26 +14,29 @@ import persistence.geo.model.Location
 
 // ユーザ情報
 //~~~~~~~~~~~~~
-case class User(
-  id:        Option[User.Id],                    // ユーザID
-  nameLast:  String,                             // 名前 (姓)
-  nameFirst: String,                             // 名前 (名)
-  email:     String,                             // メールアドレス(重複あり)
-  pref:      Location.Id,                        // 都道府県
-  address:   String,                             // 住所
+case class Applicant(
+  id:          Option[Applicant.Id],             // ユーザID
+  locationID:  Location.Id,                      // 都道府県ID
+  name:        String,                           // 名前
+  address:     String,                           // 住所
+  email:       String,                           // メールアドレス
+  phone:       String,                           // 電話番号
+  description: String,                           // 説明文
+  image:       String,                           // サムネイル画像
+  score:       Int,                              // 評価点
   updatedAt: LocalDateTime = LocalDateTime.now,  // データ更新日
   createdAt: LocalDateTime = LocalDateTime.now   // データ作成日
 )
 
 // コンパニオンオブジェクト
 //~~~~~~~~~~~~~~~~~~~~~~~~~~
-object User {
+object Applicant {
 
   // --[ 管理ID ]---------------------------------------------------------------
   type Id = Long
 
   // --[ フォーム定義 ]---------------------------------------------------------
-  val formForNewUser = Form(
+  val formForNewApplicant = Form(
     mapping(
       "nameLast"  -> nonEmptyText,
       "nameFirst" -> nonEmptyText,
@@ -41,8 +44,8 @@ object User {
       "pref"      -> nonEmptyText,
       "address"   -> nonEmptyText,
     )(Function.untupled(
-      t => User(None, t._1, t._2, t._3, t._4, t._5)
-    ))(User.unapply(_).map(
+      t => Applicant(None, t._1, t._2, t._3, t._4, t._5)
+    ))(Applicant.unapply(_).map(
       t => (t._2, t._3, t._4, t._5, t._6)
     ))
   )
