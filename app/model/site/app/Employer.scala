@@ -8,9 +8,19 @@
 package model.site.app
 
 import model.component.util.ViewValuePageLayout
+import persistence.geo.model.Location
 
 // 応募者
 //~~~~~~~~~~~~~~~~~~~~~
 case class SiteViewValueEmployer(
+  layout:   ViewValuePageLayout
+)
+
+case class SiteViewValueNewEmployer(
+  layout:   ViewValuePageLayout,
+  location: Seq[Location]
+)
+
+case class SiteViewValueEmployerLogin(
   layout:   ViewValuePageLayout
 )
