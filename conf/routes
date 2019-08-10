@@ -30,6 +30,16 @@ GET     /employer_post/:id/edit          controllers.employer_post.EmployerPostC
 PUT     /employer_post/:id               controllers.employer_post.EmployerPostController.update(id: Long)
 DELETE  /employer_post/:id               controllers.employer_post.EmployerPostController.destroy(id: Long)
 
+# --[ 求職ページ ]----------------------------------------------------------------
+GET     /applicant_post                   controllers.applicant_post.ApplicantPostController.index
+GET     /applicant_post/new               controllers.applicant_post.ApplicantPostController.add
+POST    /applicant_post                   controllers.applicant_post.ApplicantPostController.create
+GET     /applicant_post/:id               controllers.applicant_post.ApplicantPostController.show(id: Long)
+GET     /applicant_post/:id/edit          controllers.applicant_post.ApplicantPostController.edit(id: Long)
+PUT     /applicant_post/:id               controllers.applicant_post.ApplicantPostController.update(id: Long)
+DELETE  /applicant_post/:id               controllers.applicant_post.ApplicantPostController.destroy(id: Long)
+
+
 # --[ 募集者登録ページ ]----------------------------------------------------------------
 
 # --[ 応募者ログインページ ]----------------------------------------------------------------
