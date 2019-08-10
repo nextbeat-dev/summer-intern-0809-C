@@ -12,6 +12,7 @@ import persistence.employer_post.model.EmployerPost
 import persistence.geo.model.Location
 import persistence.employer.model.Employer
 import persistence.category.model.Category
+ import scala.concurrent.ExecutionContext.Implicits.global
 
 // DAO: 施設情報
 //~~~~~~~~~~~~~~~~~~
@@ -27,9 +28,9 @@ class EmployerPostDAO @javax.inject.Inject()(
   /**
    * 施設を取得
    */
-  def get(id: EmployerPost.Id): Future[Option[EmployerPost]] =
-    db.run {
-      slick
+  def get(id: EmployerPost.Id): Future[Option[EmployerPost]] = 
+   db.run {
+    slick
         .filter(_.id === id)
         .result.headOption
     }
@@ -40,6 +41,39 @@ class EmployerPostDAO @javax.inject.Inject()(
   def findAll: Future[Seq[EmployerPost]] =
     db.run {
       slick.result
+    }
+  
+  def create(employerId: Employer.Id, locationId: Location.Id ,title: String, address: String, description: String, price: Int): Unit = 
+    db.run {
+      slick
+        .map(
+          p => (
+            p.employer_id, p.locationId, p.title,
+            p.address, p.description, p.price
+          )
+        ) += ((
+          employerId, locationId, title,
+          address, description, price
+          ))
+    }
+  
+  def update(id: Long, title: String, address: String, description: String, price: Int):  Unit  = 
+    db.run {
+      slick
+        .filter(_.id === id)
+        .map(
+          p => (p.title, p.address, p.description, p.price)        
+        )
+        .update((
+          title, address, description, price
+        ))
+    }    
+
+  def delete(id: Long): Unit = 
+    db.run {
+      slick
+        .filter(_.id === id)
+        .delete
     }
 
   /**

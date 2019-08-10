@@ -1,5 +1,4 @@
-
-package controllers.facility
+package controllers.login
 
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}

@@ -32,6 +32,13 @@ class CategoryDAO @javax.inject.Inject()(
         .result.headOption
     }
 
+    def filterSeqId(seqId: Seq[Category.Id]): Future[Seq[Category]] =
+      db.run {
+        slick
+          .filter(_.id inSet seqId)
+          .result
+      }
+
   /**
    * 施設を全件取得する
    */
