@@ -50,9 +50,9 @@ class LoginController @javax.inject.Inject()(
           loginInfo match {
             case Some(x) => {
               println(x.aid)
-              Redirect("/recruit/intership-for-summer-21")
+              Redirect("/employer_post")
                 .withSession(
-                  request.session + ("aid" -> x.aid.getOrElse(0).toString)
+                  request.session + ("id" -> x.aid.getOrElse(0).toString)
                 )
             }
             case None    => {

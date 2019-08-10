@@ -48,12 +48,12 @@ class CategoryDAO @javax.inject.Inject()(
     }
 
 // --[ テーブル定義 ] --------------------------------------------------------
-  class CategoryTable(tag: Tag) extends Table[Category](tag, "applicant_post") {
+  class CategoryTable(tag: Tag) extends Table[Category](tag, "category") {
 
 
     // Table's columns
     def id            = column[Category.Id]    ("id", O.PrimaryKey, O.AutoInc)
-    def name         = column[String]         ("name")
+    def name         = column[String]          ("name")
     def description   = column[String]         ("description")
     def updatedAt     = column[LocalDateTime]  ("updated_at")
     def createdAt     = column[LocalDateTime]  ("created_at")
