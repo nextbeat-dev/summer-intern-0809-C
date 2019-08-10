@@ -9,7 +9,7 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import persistence.applicant_post.model.ApplicantPost
 import persistence.geo.model.Location
-import persistence.employer.model.Employer
+import persistence.applicant.model.Applicant
 import persistence.category.model.Category
 
 // DAO: 施設情報
@@ -87,7 +87,7 @@ class ApplicantPostDAO @javax.inject.Inject()(
 
     // Table's columns
     def id            = column[ApplicantPost.Id]    ("id", O.PrimaryKey, O.AutoInc)
-    def employerId  = column[Employer.Id] ("employer_id")    
+    def applicantId  = column[Applicant.Id] ("applicant_id")    
     def locationId    = column[Location.Id]    ("location_id")    
     def title         = column[String]         ("title")
     def address   = column[String]         ("address")
@@ -112,12 +112,12 @@ class ApplicantPostDAO @javax.inject.Inject()(
     }
 
   type TableElementTuple = (
-    ApplicantPost.Id, Employer.Id, Location.Id, String, String, String, String, String, Int,
+    ApplicantPost.Id, Applicant.Id, Location.Id, String, String, String, String, String, Int,
     Category.Id, Category.Id, Category.Id, Boolean, LocalDate, LocalDateTime, LocalDateTime
   )
     // The * projection of the table
     def * = (
-      id.?, employerId, locationId, title, address, description, main_image, thumbnail_image, price,
+      id.?, applicantId, locationId, title, address, description, main_image, thumbnail_image, price,
       category_id_1, category_id_2, category_id_3, done, job_date,
       updatedAt, createdAt
     ) <> (
