@@ -26,7 +26,6 @@ CREATE TABLE "employer" (
   "created_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-INSERT INTO "employer"("location_id", "name", "address", "email", "phone") VALUES ('01000','hiroto','北海道','hiroto@gmail.com','000-0000-0000');
 
 CREATE TABLE "applicant_post" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
