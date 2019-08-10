@@ -9,7 +9,7 @@ package persistence.employer_post.model
 
 import play.api.data._
 import play.api.data.Forms._
-import java.time.{LocalDate, LocalDateTime}
+import java.time.{LocalDate, LocalDateTime, ZoneId}
 import java.util.Date
 
 import persistence.geo.model.Location
@@ -44,6 +44,13 @@ object EmployerPost {
   // --[ 管理ID ]---------------------------------------------------------------
   type Id = Long
 
+  def date2LocalDate(date: Date): LocalDate =
+    return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+
+  def localDate2Date(localDate: LocalDate): Date =
+    return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+
+
   def applyForm(
     employerId: Employer.Id,
     locationId: Location.Id,
@@ -59,7 +66,7 @@ object EmployerPost {
     job_date: Date
   ) = EmployerPost(
     None, employerId, locationId, title, address, description, main_image, thumbnail_image, price,
-    categoryId1, categoryId2, categoryId3, false, LocalDate.MAX
+    categoryId1, categoryId2, categoryId3, false, date2LocalDate(job_date)
   )
 
   val formForEmployerPost = Form(
@@ -77,7 +84,7 @@ object EmployerPost {
       "categoryId3"-> longNumber,
       "job_date"   -> date
     )(EmployerPost.applyForm)(EmployerPost.unapply(_).map(
-      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, t._10, t._11, t._12, new Date())
+      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, t._10, t._11, t._12, localDate2Date(t._14))
     ))
   )
 }
