@@ -9,21 +9,21 @@ package controllers.applicant
 
 import model.component.util.ViewValuePageLayout
 import model.site.app.SiteViewValueNewApplicant
-import persistence.applicant.dao.{ApplicantDAO, LoginApplicantDAO}
+import persistence.applicant.dao.{ApplicantDAO, ApplicantLoginDAO}
 import persistence.geo.dao.LocationDAO
 import persistence.geo.model.Location
 import persistence.applicant.model.Applicant.formForNewApplicant
-import persistence.applicant.model.LoginApplicant
+import persistence.applicant.model.ApplicantLogin
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
 
 // 登録: 新規ユーザー
 //~~~~~~~~~~~~~~~~~~~~~
 class ApplicantController @javax.inject.Inject()(
-  val daoLocation:  LocationDAO,
-  val daoApplicant: ApplicantDAO,
-  val daoLoginApplicant: LoginApplicantDAO,
-  cc: MessagesControllerComponents
+val daoLocation:  LocationDAO,
+val daoApplicant: ApplicantDAO,
+val daoApplicantLogin: ApplicantLoginDAO,
+cc: MessagesControllerComponents
 ) extends AbstractController(cc) with I18nSupport {
   implicit lazy val executionContext = defaultExecutionContext
 
@@ -62,7 +62,13 @@ class ApplicantController @javax.inject.Inject()(
       applicant   => {
         for {
           aid <- daoApplicant.add(applicant)
-          _   <- daoLoginApplicant.add(LoginApplicant(id = None, aid = aid, password = applicant.password))
+          _   <- daoApplicantLogin.add(
+            ApplicantLogin(
+              aid = Some(aid),
+              email = applicant.email,
+              password = applicant.password
+            )
+          )
         } yield {
           // TODO: セッション追加処理
           Redirect("/recruit/intership-for-summer-21")
