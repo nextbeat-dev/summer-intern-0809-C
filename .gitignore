@@ -29,3 +29,6 @@ npm-debug.log
 /ui/.sass-cache
 
 vue_form/dist
+
+conf/application.conf
+database/nextbeat.mv.db
