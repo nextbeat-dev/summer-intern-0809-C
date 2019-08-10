@@ -15,7 +15,7 @@
 @views.html.common.layout.InnerContent("site-app-new-user-form", "content") {
   @** --[ 見出し ]---------------------------------------------------------- *@
   <h3 class="content__section header">
-    <span class="header__title">求人一覧</span>
+    <span class="header__title">求職一覧</span>
   </h3>
 
   @** --[ 一覧 ]-------------------------------------------------------- *@
@@ -32,10 +32,10 @@
             <section class="facility-item__content">
               <div>
                 <div class="item-panel__content">
-                  <div class="address">
+                  <div class="destination">
                     <label class="inline">住所:</label>
                     <p class="inline">
-                      @post.address
+                      @post.destination
                     </p>
                   </div>
                   <div class="description">

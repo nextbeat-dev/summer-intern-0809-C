@@ -33,6 +33,7 @@ case class ApplicantPost(
   free_date: LocalDate,
   updatedAt:   LocalDateTime = LocalDateTime.now,  // データ更新日
   createdAt:   LocalDateTime = LocalDateTime.now   // データ作成日
+)
 // コンパニオンオブジェクト
 //~~~~~~~~~~~~~~~~~~~~~~~~~~
 object ApplicantPost {

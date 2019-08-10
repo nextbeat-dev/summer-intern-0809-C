@@ -51,15 +51,15 @@ class ApplicantPostDAO @javax.inject.Inject()(
       }
     }
   
-  def update(id: Long, title: String, destination: String, description: String, price: Int):  Unit  = 
+  def update(id: Long, title: String, destination: String, description: String):  Unit  = 
     db.run {
       slick
         .filter(_.id === id)
         .map(
-          p => (p.title, p.destination, p.description, p.price)        
+          p => (p.title, p.destination, p.description)        
         )
         .update((
-          title, destination, description, price
+          title, destination, description
         ))
     }    
 
