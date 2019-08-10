@@ -37,7 +37,7 @@ class EmployerLoginDAO @javax.inject.Inject()(
     */
   def update(data: EmployerLogin): Future[Unit] =
     db.run {
-      val row = slick.filter(_.aid === data.aid)
+      val row = slick.filter(_.eid === data.eid)
       for {
         old <- row.result.headOption
         _   <- old match {
@@ -50,10 +50,10 @@ class EmployerLoginDAO @javax.inject.Inject()(
   /**
    * 施設を取得
    */
-  def findByAid(aid: Employer.Id): Future[Option[EmployerLogin]] =
+  def findByEid(eid: Employer.Id): Future[Option[EmployerLogin]] =
     db.run {
       slick
-        .filter(_.aid === aid)
+        .filter(_.eid === eid)
         .result.headOption
     }
 
@@ -63,17 +63,17 @@ class EmployerLoginDAO @javax.inject.Inject()(
 
 
     // Table's columns
-    def aid       = column[Employer.Id]  ("aid", O.PrimaryKey)
+    def eid       = column[Employer.Id]  ("eid", O.PrimaryKey)
     def email     = column[String]        ("email")
     def password  = column[String]        ("password")
     def updatedAt = column[LocalDateTime] ("updated_at")
     def createdAt = column[LocalDateTime] ("created_at")
 
-    def ukey01 = index("ukey01", aid, unique = true)
+    def ukey01 = index("ukey01", eid, unique = true)
 
     // The * projection of the table
     def * = (
-      aid.?, email, password, updatedAt, createdAt
+      eid.?, email, password, updatedAt, createdAt
     ) <> (
       /** The bidirectional mappings : Tuple(table) => Model */
       (EmployerLogin.apply _).tupled,

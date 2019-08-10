@@ -63,10 +63,10 @@ cc: MessagesControllerComponents
   //     },
   //     employer   => {
   //       for {
-  //         aid <- daoEmployer.add(employer)
+  //         eid <- daoEmployer.add(employer)
   //         _   <- daoEmployerLogin.update(
   //           EmployerLogin(
-  //             aid = Some(aid),
+  //             eid = Some(eid),
   //             email = employer.email,
   //             password = employer.password
   //           )
@@ -75,7 +75,7 @@ cc: MessagesControllerComponents
   //         // TODO: セッション追加処理
   //         Redirect("/employer_post")
   //           .withSession(
-  //             request.session + ("aid" -> aid.toString)
+  //             request.session + ("eid" -> eid.toString)
   //           )
   //       }
   //     }

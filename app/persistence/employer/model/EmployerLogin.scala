@@ -17,7 +17,7 @@ import play.api.data.Forms.mapping
 // 施設情報 (sample)
 //~~~~~~~~~~~~~
 case class EmployerLogin(
-  aid:       Option[Employer.Id],
+  eid:       Option[Employer.Id],
   email:     String, //応募者のID
   password:  String, //パスワード
   updatedAt: LocalDateTime = LocalDateTime.now, // データ更新日
