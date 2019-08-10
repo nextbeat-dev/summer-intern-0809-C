@@ -41,25 +41,25 @@ class EmployerPostController @javax.inject.Inject()(
 
   def create = TODO
 
-  // def show(id: Long) = Action.async { implicit request =>
-  //   for {
-  //     employerPost <- employerDao.get(id)
-  //     location <- daoLocation.get(employerPost.locationId)
-  //     categorySeqId <- Seq[employerPost.categoryId1, employerPost.categoryId1, employerPost.categoryId1]
-  //     categorys <- categoryDao.filterSeqId(categorySeqId.removeAll(null))
-  //   } yield {
-  //     val vvf = SiteViewValueEmployerPostShow(
-  //       layout = ViewValuePageLayout(id = request.uri),
-  //       post = employerPost,
-  //       location = location,
-  //       categorys = categorys
-  //     )
+  def show(id: Long) = Action.async { implicit request =>
+    for {
+      employerPost <- employerPostDao.get(id)
+      location <- daoLocation.get(employerPost.get.locationId)
+      categorySeqId = Seq(employerPost.get.categoryId1, employerPost.get.categoryId2, employerPost.get.categoryId3)
+      categorys <- categoryDao.filterSeqId(categorySeqId)
+    } yield {
+      val vv = SiteViewValueEmployerPostShow(
+        layout = ViewValuePageLayout(id = request.uri),
+        post = employerPost.get,
+        location = location.get,
+        categorys = categorys
+      )
 
-  //     Ok(views.html.site.employer_post.show.Main())
-  //   }
-  // }
+      Ok(views.html.site.employer_post.show.Main(vv))
+    }
+  }
 
-  def show(id: Long) = TODO
+  // def show(id: Long) = TODO
 
   def edit(id: Long) = TODO
 

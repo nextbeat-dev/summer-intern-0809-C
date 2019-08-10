@@ -15,7 +15,7 @@ case class SiteViewValueEmployerPostIndex(
 
 case class SiteViewValueEmployerPostShow(
   layout:   ViewValuePageLayout,
-  post: Seq[EmployerPost],
+  post: EmployerPost,
   location: Location,
-  category: Seq[Category]
+  categorys: Seq[Category]
 )
