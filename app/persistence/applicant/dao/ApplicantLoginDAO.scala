@@ -79,7 +79,7 @@ class ApplicantLoginDAO @javax.inject.Inject()(
       (ApplicantLogin.apply _).tupled,
       /** The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => ApplicantLogin.unapply(v).map(_.copy(
-        _5 = LocalDateTime.now
+        _4 = LocalDateTime.now
       ))
     )
   }
