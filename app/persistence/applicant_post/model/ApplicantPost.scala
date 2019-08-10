@@ -74,7 +74,7 @@ object ApplicantPost {
       "categoryId3"-> longNumber,
       "free_date"   -> date
     )(ApplicantPost.applyForm)(ApplicantPost.unapply(_).map(
-      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, localDate2Date(t._10))
+      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, localDate2Date(t._11))
     ))
   )
 }

@@ -51,15 +51,15 @@ class ApplicantPostDAO @javax.inject.Inject()(
       }
     }
   
-  def update(id: Long, title: String, address: String, description: String, price: Int):  Unit  = 
+  def update(id: Long, title: String, destination: String, description: String, price: Int):  Unit  = 
     db.run {
       slick
         .filter(_.id === id)
         .map(
-          p => (p.title, p.address, p.description, p.price)        
+          p => (p.title, p.destination, p.description, p.price)        
         )
         .update((
-          title, address, description, price
+          title, destination, description, price
         ))
     }    
 
@@ -90,16 +90,13 @@ class ApplicantPostDAO @javax.inject.Inject()(
     def applicantId  = column[Applicant.Id] ("applicant_id")    
     def locationId    = column[Location.Id]    ("location_id")    
     def title         = column[String]         ("title")
-    def address   = column[String]         ("address")
-    def description   = column[String]         ("description")
-    def main_image    = column[String] ("main_image")
-    def thumbnail_image = column[String] ("thumbnail_image")
-    def price         = column[Int] ("price")
+    def destination   = column[String]         ("destination")
+    def description   = column[String]         ("description")    
     def category_id_1 = column[Category.Id] ("category_id_1")
     def category_id_2 = column[Category.Id] ("category_id_2")
     def category_id_3 = column[Category.Id] ("category_id_3")
     def done          = column[Boolean] ("done")
-    def job_date      = column[LocalDate] ("job_date")
+    def free_date      = column[LocalDate] ("free_date")
     def updatedAt     = column[LocalDateTime]  ("updated_at")
     def createdAt     = column[LocalDateTime]  ("created_at")
 
@@ -112,20 +109,20 @@ class ApplicantPostDAO @javax.inject.Inject()(
     }
 
   type TableElementTuple = (
-    ApplicantPost.Id, Applicant.Id, Location.Id, String, String, String, String, String, Int,
+    ApplicantPost.Id, Applicant.Id, Location.Id, String, String, String,
     Category.Id, Category.Id, Category.Id, Boolean, LocalDate, LocalDateTime, LocalDateTime
   )
     // The * projection of the table
     def * = (
-      id.?, applicantId, locationId, title, address, description, main_image, thumbnail_image, price,
-      category_id_1, category_id_2, category_id_3, done, job_date,
+      id.?, applicantId, locationId, title, destination, description,
+      category_id_1, category_id_2, category_id_3, done, free_date,
       updatedAt, createdAt
     ) <> (
       /** The bidirectional mappings : Tuple(table) => Model */
       (ApplicantPost.apply _).tupled,
       /** The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => ApplicantPost.unapply(v).map(_.copy(
-        _15 = LocalDateTime.now
+        _12 = LocalDateTime.now
       ))
     )
   }
