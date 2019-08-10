@@ -9,7 +9,7 @@ import persistence.employer_post.dao.EmployerPostDAO
 import persistence.geo.model.Location
 import persistence.geo.dao.LocationDAO
 // model
-// import model.site.facility.SiteViewValueFacilityList
+import model.site.app.SiteViewValueEmployerPostIndex
 // import model.site.facility.SiteViewValueFacilityShow
 // import model.site.facility.SiteViewValueFacilityEdit
 // import model.site.facility.SiteViewValueFacilityAdd
@@ -27,7 +27,17 @@ class EmployerPostController @javax.inject.Inject()(
 ) extends AbstractController(cc) with I18nSupport {
   implicit lazy val executionContext = defaultExecutionContext
 
-  def index = TODO
+  def index = Action.async { implicit request =>
+    for {
+        postSeq <- employerPostDao.findAll
+    } yield {
+        val vv = SiteViewValueEmployerPostIndex(
+            layout = ViewValuePageLayout(id = request.uri),
+            posts = postSeq
+        )
+        Ok(views.html.site.employer_post.index.Main(vv))
+    }
+  }
 
   def add = TODO
 
