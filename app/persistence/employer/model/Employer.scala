@@ -10,7 +10,6 @@ package persistence.employer.model
 import play.api.data._
 import play.api.data.Forms._
 import java.time.LocalDateTime
-import java.time.LocalDate
 
 import persistence.geo.model.Location
 
@@ -22,7 +21,8 @@ case class Employer(
   locationId:  Location.Id,                        // 地域ID
   name:       String,                             // 施設名
   address: String,                             // 住所(詳細)  
-  email: String,                             // 住所(詳細)  
+  email: String,                             // 住所(詳細)
+  password: String,
   phone: String,                             // 住所(詳細)  
   description: String,                             // 施設説明
   image: String,                             // 施設説明
@@ -43,11 +43,32 @@ object Employer {
   // --[ 管理ID ]---------------------------------------------------------------
   type Id = Long
 
+  def applyForm(
+    locationId: Location.Id,
+    name: String,
+    address: String,
+    email: String,
+    password: String,
+    phone: String,
+    description: String,
+    image: String,
+  ): Employer = Employer(None, locationId, name, address, email, password, phone, description, image, 0)
+
   // --[ フォーム定義 ]---------------------------------------------------------
-  // val formForEmployerSearch = Form(
-  //   mapping(
-  //     "locationId" -> optional(text),
-  //   )(EmployerSearch.apply)(EmployerSearch.unapply)
-  // )
+  val formForNewEmployer = Form(
+    mapping(
+      "locationId"  -> nonEmptyText,
+      "name"        -> nonEmptyText,
+      "address"     -> nonEmptyText,
+      "email"     -> nonEmptyText,
+      "password"  -> nonEmptyText,
+      "phone"     -> nonEmptyText,
+      "description"     -> nonEmptyText,
+      "image"     -> nonEmptyText,
+    )(Employer.applyForm)(Employer.unapply(_).map(
+      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9)
+    ))
+  )
+
 }
 

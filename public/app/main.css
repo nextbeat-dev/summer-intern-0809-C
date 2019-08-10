@@ -424,6 +424,40 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 50px;
     text-align: center; }
 
+#site-app-new-employer-form.content {
+  border: 1px solid #eeeeee; }
+
+#site-app-new-employer-form .content__section.header {
+  padding: 30px;
+  background: #f5f5f5;
+  text-align: center; }
+  #site-app-new-employer-form .content__section.header .header__title {
+    font-size: 1.14286rem;
+    font-weight: bold; }
+
+#site-app-new-employer-form .content__section.form {
+  width: 660px;
+  margin: 50px auto; }
+  #site-app-new-employer-form .content__section.form .form__section dt > label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 10px; }
+  #site-app-new-employer-form .content__section.form .form__section.name input {
+    width: 100%; }
+  #site-app-new-employer-form .content__section.form .form__section.address input {
+    width: 100%; }
+  #site-app-new-employer-form .content__section.form .form__section.email input {
+    width: 460px; }
+  #site-app-new-employer-form .content__section.form .form__section.phone input {
+    width: 460px; }
+  #site-app-new-employer-form .content__section.form .form__section.description input {
+    width: 100%; }
+  #site-app-new-employer-form .content__section.form .form__section.image input {
+    width: 100%; }
+  #site-app-new-employer-form .content__section.form .form__section.submit {
+    margin-top: 50px;
+    text-align: center; }
+
 #site-app-new-applicant-form.content {
   border: 1px solid #eeeeee; }
 
@@ -455,6 +489,42 @@ h1, h2, h3, h4, h5, h6 {
   #site-app-new-applicant-form .content__section.form .form__section.image input {
     width: 100%; }
   #site-app-new-applicant-form .content__section.form .form__section.submit {
+    margin-top: 50px;
+    text-align: center; }
+
+#site-employer-login-form.content {
+  border: 1px solid #eeeeee; }
+
+#site-employer-login-form .content__section.header {
+  padding: 30px;
+  background: #f5f5f5;
+  text-align: center; }
+  #site-employer-login-form .content__section.header .header__title {
+    font-size: 1.14286rem;
+    font-weight: bold; }
+
+#site-employer-login-form .content__section.form {
+  width: 660px;
+  margin: 50px auto; }
+  #site-employer-login-form .content__section.form .form__section dt > label {
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 10px; }
+  #site-employer-login-form .content__section.form #email_field label {
+    margin-left: 120px; }
+  #site-employer-login-form .content__section.form #email_field dd {
+    text-align: center;
+    margin-inline-start: 0px; }
+  #site-employer-login-form .content__section.form .form__section.email input {
+    width: 440px; }
+  #site-employer-login-form .content__section.form #password_field label {
+    margin-left: 120px; }
+  #site-employer-login-form .content__section.form #password_field dd {
+    text-align: center;
+    margin-inline-start: 0px; }
+  #site-employer-login-form .content__section.form .form__section.password input {
+    width: 440px; }
+  #site-employer-login-form .content__section.form .form__section.submit {
     margin-top: 50px;
     text-align: center; }
 

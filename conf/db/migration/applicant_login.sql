@@ -8,3 +8,12 @@ CREATE TABLE "applicant_login" (
   UNIQUE KEY "ukey01" ("email")
 )
 
+CREATE TABLE "employer_login" (
+  "eid"        BIGINT(20) UNSIGNED NOT NULL,
+  "email"      VARCHAR(255) NOT NULL,
+  "password"   VARCHAR(255) NOT NULL,
+  "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+  "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  PRIMARY KEY ("eid"),
+  UNIQUE KEY "employer_login_ukey01" ("email")
+)

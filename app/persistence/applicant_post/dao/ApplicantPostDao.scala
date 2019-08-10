@@ -58,19 +58,19 @@ class ApplicantPostDAO @javax.inject.Inject()(
 
 
     // Table's columns
-    def id            = column[ApplicantPost.Id]    ("id", O.PrimaryKey, O.AutoInc)
-    def applicant_id  = column[Applicant.Id] ("applicant_id")    
-    def locationId    = column[Location.Id]    ("location_id")    
-    def title         = column[String]         ("title")
-    def destination   = column[String]         ("destination")
-    def description   = column[String]         ("description")
-    def category_id_1 = column[Category.Id] ("category_id_1")
-    def category_id_2 = column[Category.Id] ("category_id_2")
-    def category_id_3 = column[Category.Id] ("category_id_3")
-    def done          = column[Boolean] ("done")
-    def free_date     = column[LocalDate] ("free_date")
-    def updatedAt     = column[LocalDateTime]  ("updated_at")
-    def createdAt     = column[LocalDateTime]  ("created_at")
+    def id            = column[ApplicantPost.Id] ("id", O.PrimaryKey, O.AutoInc)
+    def applicant_id  = column[Applicant.Id]     ("applicant_id")
+    def locationId    = column[Location.Id]      ("location_id")
+    def title         = column[String]           ("title")
+    def destination   = column[String]           ("destination")
+    def description   = column[String]           ("description")
+    def category_id_1 = column[Category.Id]      ("category_id_1")
+    def category_id_2 = column[Category.Id]      ("category_id_2")
+    def category_id_3 = column[Category.Id]      ("category_id_3")
+    def done          = column[Boolean]          ("done")
+    def free_date     = column[LocalDate]        ("free_date")
+    def updatedAt     = column[LocalDateTime]    ("updated_at")
+    def createdAt     = column[LocalDateTime]    ("created_at")
 
     // The * projection of the table
     def * = (
