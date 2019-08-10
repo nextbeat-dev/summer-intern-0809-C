@@ -24,6 +24,7 @@ case class ApplicantLogin(
   createdAt: LocalDateTime = LocalDateTime.now // データ作成日
 )
 
+
 object ApplicantLogin {
   // --[ 管理ID ]---------------------------------------------------------------
   type Id = Long

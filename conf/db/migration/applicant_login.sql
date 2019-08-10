@@ -4,6 +4,7 @@ CREATE TABLE "applicant_login" (
   "password"   VARCHAR(255) NOT NULL,
   "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  UNIQUE KEY "ukey01" ("aid"),
-  UNIQUE KEY "ukey02" ("email")
+  PRIMARY KEY ("aid"),
+  UNIQUE KEY "ukey01" ("email")
 )
+

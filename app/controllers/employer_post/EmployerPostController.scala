@@ -50,7 +50,6 @@ class EmployerPostController @javax.inject.Inject()(
     }
   }
 
-  // def show(id: Long) = TODO
   def index = Action.async { implicit request =>
     for {
         postSeq <- employerPostDao.findAll

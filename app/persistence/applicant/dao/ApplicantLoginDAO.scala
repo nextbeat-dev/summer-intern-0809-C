@@ -7,6 +7,7 @@ import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 // DAO: 施設情報
 //~~~~~~~~~~~~~~~~~~
@@ -31,20 +32,20 @@ class ApplicantLoginDAO @javax.inject.Inject()(
         .result.headOption
     }
 
-
   /**
-    * ユーザ情報を追加する
+    * ログイン情報を追加する
     */
-  def add(data: ApplicantLogin): Future[ApplicantLogin.Id] = {
+  def update(data: ApplicantLogin): Future[Unit] =
     db.run {
-      data.aid match {
-        case None => slick returning slick.map(_.aid) += data
-        case Some(_) => DBIO.failed(
-          new IllegalArgumentException("The given object is already assigned id.")
-        )
-      }
+      val row = slick.filter(_.aid === data.aid)
+      for {
+        old <- row.result.headOption
+        _   <- old match {
+          case None    => slick += data
+          case Some(_) => row.update(data)
+        }
+      } yield ()
     }
-  }
 
   /**
    * 施設を取得
@@ -62,7 +63,7 @@ class ApplicantLoginDAO @javax.inject.Inject()(
 
 
     // Table's columns
-    def aid       = column[Applicant.Id]  ("aid")
+    def aid       = column[Applicant.Id]  ("aid", O.PrimaryKey)
     def email     = column[String]        ("email")
     def password  = column[String]        ("password")
     def updatedAt = column[LocalDateTime] ("updated_at")

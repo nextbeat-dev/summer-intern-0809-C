@@ -62,7 +62,7 @@ cc: MessagesControllerComponents
       applicant   => {
         for {
           aid <- daoApplicant.add(applicant)
-          _   <- daoApplicantLogin.add(
+          _   <- daoApplicantLogin.update(
             ApplicantLogin(
               aid = Some(aid),
               email = applicant.email,
@@ -71,7 +71,10 @@ cc: MessagesControllerComponents
           )
         } yield {
           // TODO: セッション追加処理
-          Redirect("/recruit/intership-for-summer-21")
+          Redirect("/employer_post")
+            .withSession(
+              request.session + ("aid" -> aid.toString)
+            )
         }
       }
     )

@@ -1,0 +1,5 @@
+TRUNCATE TABLE "applicant";
+ALTER TABLE "applicant" ALTER COLUMN "aid" INT AUTO_INCREMENT(1)
+
+TRUNCATE TABLE "applicant_login";
+ALTER TABLE "applicant_login" ALTER COLUMN "aid" INT AUTO_INCREMENT(1)
