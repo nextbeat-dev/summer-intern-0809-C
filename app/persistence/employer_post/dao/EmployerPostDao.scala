@@ -2,6 +2,7 @@ package persistence.employer_post.dao
 
 import java.time.LocalDateTime
 import java.time.LocalDate
+import java.util.Date
 import scala.concurrent.Future
 
 import slick.jdbc.JdbcProfile
@@ -42,7 +43,7 @@ class EmployerPostDAO @javax.inject.Inject()(
       slick.result
     }
   
-  def create(employerId: Employer.Id, locationId: Location.Id ,title: String, address: String, description: String): Unit = 
+  def create(employerId: Employer.Id, locationId: Location.Id ,title: String, address: String, description: String, price: Int): Future[EmployerPost.Id] = 
     db.run {
       slick
         .map(
@@ -92,7 +93,7 @@ class EmployerPostDAO @javax.inject.Inject()(
 
     // Table's columns
     def id            = column[EmployerPost.Id]    ("id", O.PrimaryKey, O.AutoInc)
-    def employer_id  = column[Employer.Id] ("employer_id")    
+    def employerId  = column[Employer.Id] ("employer_id")    
     def locationId    = column[Location.Id]    ("location_id")    
     def title         = column[String]         ("title")
     def address   = column[String]         ("address")
@@ -104,22 +105,39 @@ class EmployerPostDAO @javax.inject.Inject()(
     def category_id_2 = column[Category.Id] ("category_id_2")
     def category_id_3 = column[Category.Id] ("category_id_3")
     def done          = column[Boolean] ("done")
-    def job_date     = column[LocalDate] ("job_date")
+    def job_date      = column[LocalDate] ("job_date")
     def updatedAt     = column[LocalDateTime]  ("updated_at")
     def createdAt     = column[LocalDateTime]  ("created_at")
 
+    def date2LocalDate(date: Date): LocalDate = {
+      date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    } 
+
+    def localDate2Date(localDate: LocalDate): Date = {
+      Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+  type TableElementType = (
+    EmployerPost.Id, Employer.Id, Location.Id, String, String, String, String, String, Int,
+    Category.Id, Category.Id, Category.Id, Boolean, LocalDate, LocalDateTime, LocalDateTime
+  )
     // The * projection of the table
     def * = (
-      id.?, employer_id, locationId, title, address, description, main_image, thumbnail_image, price,
+      id.?, employerId, locationId, title, address, description, main_image, thumbnail_image, price,
       category_id_1, category_id_2, category_id_3, done, job_date,
       updatedAt, createdAt
     ) <> (
       /** The bidirectional mappings : Tuple(table) => Model */
-      (EmployerPost.apply _).tupled,
+      (t: TableElementType) => 
+        EmployerPost(
+          Some(t._1), t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, t._10, t._11, t._12, t._13, localDate2Date(t._14), t._15, t._16
+        ),
       /** The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => EmployerPost.unapply(v).map(_.copy(
-        _15 = LocalDateTime.now
-      ))
+        _14 = date2LocalDate(_14),
+        _15 = LocalDateTime.now,
+      )
+      )
     )
   }
 }
