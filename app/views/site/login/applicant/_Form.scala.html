@@ -6,23 +6,46 @@
  *@
 
 @import views.html.helper
-@import model.site.app.SiteViewValueApplicant
-@import persistence.applicant.model.Applicant
+@import model.site.app.SiteViewValueApplicantLogin
+@import persistence.applicant.model.ApplicantLogin
 @import play.api.data.Form
 
-@(vv: SiteViewValueApplicant, form: Form[Applicant])(implicit messages: play.api.i18n.Messages)
+@(vv: SiteViewValueApplicantLogin, form: Form[ApplicantLogin])(implicit messages: play.api.i18n.Messages)
 
 @** ユーザー登録フォーム *@
-@views.html.common.layout.InnerContent("site-app-new-user-form", "content") {
+@views.html.common.layout.InnerContent("site-applicant-login-form", "content") {
   @** --[ 見出し ]---------------------------------------------------------- *@
   <h3 class="content__section header">
-    <span class="header__title">新規ユーザー登録</span>
+    <span class="header__title">ログイン</span>
   </h3>
 
   @** --[ フォーム ]-------------------------------------------------------- *@
   <div class="content__section form">
-    @helper.form(action = controllers.app.routes.NewUserCommitController.application()) {
+    @helper.form(action = controllers.login.routes.LoginController.applicantAuth()) {
+      @** メールアドレス *@
+      <div class="form__section email">
+        @helper.inputText(
+          form("email"),
+          '_label           -> "メールアドレス",
+          '_showConstraints -> false
+        )
+      </div>
 
+      @** パスワード *@
+      <div class="form__section password">
+        @helper.inputPassword(
+          form("password"),
+          '_label           -> "パスワード",
+          '_showConstraints -> false
+        )
+      </div>
+
+      @** ログインボタン *@
+      <div class="form__section submit">
+        <button class="button button-stroked" type="submit">
+          <span class="submit__text">ログイン</span>
+        </button>
+      </div>
     }
   </div>
 }

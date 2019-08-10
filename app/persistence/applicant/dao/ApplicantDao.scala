@@ -7,9 +7,8 @@ import slick.jdbc.JdbcProfile
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import persistence.applicant.model.Applicant
-import persistence.applicant.model.LoginApplicant.Id
+import persistence.applicant.model.ApplicantLogin.Id
 import persistence.geo.model.Location
-import scala.concurrent.ExecutionContext.Implicits.global
 // DAO: 施設情報
 //~~~~~~~~~~~~~~~~~~
 class ApplicantDAO @javax.inject.Inject()(

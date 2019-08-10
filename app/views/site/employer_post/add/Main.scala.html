@@ -1,0 +1,17 @@
+@import play.api.data.Form
+
+@import model.site.app.SiteViewValueEmployerPost
+@import persistence.employer_post.model.EmployerPost
+@(vv: SiteViewValueEmployerPost, form: Form[EmployerPost])(implicit messages: play.api.i18n.Messages)
+
+@views.html.common.layout.Default(vv.layout) {
+  @views.html.common.layout.ContentLayout(
+    id      = "site-facility-list",
+    content = tplContent
+  )
+}
+
+@** テンプレート: コンテンツ *@
+@tplContent = {
+  @views.html.site.employer_post.add._Add(vv, form)
+}
