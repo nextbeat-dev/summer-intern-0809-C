@@ -42,7 +42,17 @@ class EmployerPostController @javax.inject.Inject()(
     }
   }
 
-  def add = TODO
+  def add = Action.async { implicit request =>
+    for {
+      locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
+    } yield {
+      val vv = SiteViewValueEmployerPostNew(
+        layout   = ViewValuePageLayout(id = request.uri),
+        location = locSeq
+      )
+      Ok(views.html.site.employer_post.new.Main(vv, formForEmployerPostAdd))
+    }
+  }
 
   def create = Action { implicit request
     val body = request.body

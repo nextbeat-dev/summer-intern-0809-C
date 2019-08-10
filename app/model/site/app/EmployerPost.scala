@@ -10,3 +10,8 @@ case class SiteViewValueEmployerPostIndex(
   layout:   ViewValuePageLayout,
   posts: Seq[EmployerPost]
 )
+
+case class SiteViewValueEmployerPostAdd(
+  layout: ViewValuePageLayout,
+
+)

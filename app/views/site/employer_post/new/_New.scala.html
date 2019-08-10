@@ -1,0 +1,49 @@
+@import views.html.helper
+@import persistence.employer_post.model._
+@import model.site.app.SiteViewValueEmployerPostAdd
+@import play.api.data.Form
+
+@(vv: SiteViewValueEmployerPostAdd, form: Form[EmployerPostAdd])(implicit messages: play.api.i18n.Messages)
+
+@** 施設検索一覧 *@
+@views.html.common.layout.InnerContent("site-app-new-user-form", "content") {
+  @** --[ 見出し ]---------------------------------------------------------- *@
+  <h3 class="content__section header">
+    <span class="header__title">求人一覧</span>
+  </h3>
+
+  @** --[ 一覧 ]-------------------------------------------------------- *@
+  <div class="content__section content">
+    @for(post <- vv.posts) {
+      <article class="facility-list-item">
+        <a href="#">
+          <div class="item-panel__wrapper">
+            <header class="facility-item__header">
+              <div class="title">
+                @post.title
+              </div>
+            </header>
+            <section class="facility-item__content">
+              <div>
+                <div class="item-panel__content">
+                  <div class="address">
+                    <label class="inline">住所:</label>
+                    <p class="inline">
+                      @post.address
+                    </p>
+                  </div>
+                  <div class="description">
+                    <label class="inline">備考:</label>
+                    <p class="inline">
+                      @post.description
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </a>
+      </article>
+    }
+  </div>
+}

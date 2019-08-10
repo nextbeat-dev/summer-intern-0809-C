@@ -43,6 +43,21 @@ case class EmployerPost(
 //   locationIdOpt: Option[Location.Id]
 // )
 
+case class EmployerPostAdd(
+  employerId: Employer.Id,
+  locationId:  Location.Id,                        // 地域ID
+  title:       String,                             // 施設名
+  address: String,                             // 住所(詳細)
+  description: String,                             // 施設説明
+  main_image: String,
+  thumbnail_image: String,
+  price: Int,
+  categoryId1: Category.Id,
+  categoryId2: Category.Id,
+  categoryId3: Category.Id,
+  job_date: LocalDate,  
+)
+
 // コンパニオンオブジェクト
 //~~~~~~~~~~~~~~~~~~~~~~~~~~
 object EmployerPost {
@@ -56,5 +71,21 @@ object EmployerPost {
   //     "locationId" -> optional(text),
   //   )(EmployerPostSearch.apply)(EmployerPostSearch.unapply)
   // )
+  val formForEmployerPostAdd = For(
+    mapping(
+      "employerId" -> nonEmptyText,
+      "locationId" -> nonEmptyText,
+      "title"      -> nonEmptyText,
+      "address"    -> nonEmptyText,
+      "description"-> text,
+      "main_image" -> text,
+      "thumbnail_image"-> text,
+      "price"      -> number(min = 0),
+      "categoryId1"-> text,
+      "categoryId2"-> text,
+      "categoryId3"-> text,
+      "job_date"   -> date,
+    )(EmployerPostAdd.apply)(EmployerPostAdd.unapply)
+  )
 }
 
