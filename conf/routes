@@ -14,6 +14,15 @@ GET  /facility/search                 controllers.facility.FacilityController.se
 GET  /applicant/new-applicant         controllers.applicant.ApplicantController.newApplicant
 POST /applicant/new-applicant         controllers.applicant.ApplicantController.registerApplicant
 
+# --[ 求人ページ ]----------------------------------------------------------------
+GET     /employer_post                   controllers.employer_post.EmployerPostController.index
+GET     /employer_post/new               controllers.employer_post.EmployerPostController.add
+POST    /employer_post                   controllers.employer_post.EmployerPostController.create
+GET     /employer_post/:id               controllers.employer_post.EmployerPostController.show(id: Long)
+GET     /employer_post/:id/edit          controllers.employer_post.EmployerPostController.edit(id: Long)
+PUT     /employer_post/:id               controllers.employer_post.EmployerPostController.update(id: Long)
+DELETE  /employer_post/:id               controllers.employer_post.EmployerPostController.destroy(id: Long)
+
 # --[ 募集者登録ページ ]----------------------------------------------------------------
 
 # --[ 応募者ログインページ ]----------------------------------------------------------------
