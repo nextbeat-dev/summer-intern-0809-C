@@ -16,6 +16,11 @@ GET  /facility/search                 controllers.facility.FacilityController.se
 GET  /applicant/new-applicant         controllers.applicant.ApplicantController.newApplicant
 POST /applicant/new-applicant         controllers.applicant.ApplicantController.registerApplicant
 
+# --[ 農家登録ページ ]----------------------------------------------------------------
+GET  /employer/new-employer           controllers.employer.EmployerController.newEmployer
+POST /employer/new-employer           controllers.employer.EmployerController.registerEmployer
+
+
 # --[ 求人ページ ]----------------------------------------------------------------
 GET     /employer_post                   controllers.employer_post.EmployerPostController.index
 GET     /employer_post/new               controllers.employer_post.EmployerPostController.add
