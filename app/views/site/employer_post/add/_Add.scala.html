@@ -1,9 +1,9 @@
 @import views.html.helper
 @import persistence.employer_post.model._
-@import model.site.app.SiteViewValueEmployerPostAdd
+@import model.site.app.SiteViewValueEmployerPost
 @import play.api.data.Form
 
-@(vv: SiteViewValueEmployerPostAdd, form: Form[EmployerPostAdd])(implicit messages: play.api.i18n.Messages)
+@(vv: SiteViewValueEmployerPost, form: Form[EmployerPost])(implicit messages: play.api.i18n.Messages)
 
 @** ユーザー登録フォーム *@
 @views.html.common.layout.InnerContent("site-app-new-user-form", "content") {
@@ -24,7 +24,7 @@
     "job_date"    DATE   NOT NULL,
   -->
   <div class="content__section form">
-    @helper.form(action = controllers.app.routes.EmployerPostController.create()) {
+    @helper.form(action = controllers.employer_post.routes.EmployerPostController.create()) {
 
       @** 行き先 location_id *@
       <div class="form__section pref">

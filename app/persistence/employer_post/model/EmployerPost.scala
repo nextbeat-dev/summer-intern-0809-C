@@ -9,7 +9,7 @@ package persistence.employer_post.model
 
 import play.api.data._
 import play.api.data.Forms._
-import java.time.LocalDateTime
+import java.time.{LocalDate, LocalDateTime}
 import java.util.Date
 
 import persistence.geo.model.Location
@@ -33,31 +33,10 @@ case class EmployerPost(
   categoryId2: Category.Id,
   categoryId3: Category.Id,
   done: Boolean,
-  job_date: Date,  
+  job_date: LocalDate,
   updatedAt:   LocalDateTime = LocalDateTime.now,  // データ更新日
   createdAt:   LocalDateTime = LocalDateTime.now   // データ作成日
 )
-
-// 施設検索
-// case class EmployerPostSearch(
-//   locationIdOpt: Option[Location.Id]
-// )
-
-case class EmployerPostAdd(
-  employerId: Employer.Id,
-  locationId:  Location.Id,                        // 地域ID
-  title:       String,                             // 施設名
-  address: String,                             // 住所(詳細)
-  description: String,                             // 施設説明
-  main_image: String,
-  thumbnail_image: String,
-  price: Int,
-  categoryId1: Category.Id,
-  categoryId2: Category.Id,
-  categoryId3: Category.Id,
-  job_date: Date,  
-)
-
 // コンパニオンオブジェクト
 //~~~~~~~~~~~~~~~~~~~~~~~~~~
 object EmployerPost {
@@ -65,13 +44,25 @@ object EmployerPost {
   // --[ 管理ID ]---------------------------------------------------------------
   type Id = Long
 
-  // --[ フォーム定義 ]---------------------------------------------------------
-  // val formForEmployerPostSearch = Form(
-  //   mapping(
-  //     "locationId" -> optional(text),
-  //   )(EmployerPostSearch.apply)(EmployerPostSearch.unapply)
-  // )
-  val formForEmployerPostAdd = Form(
+  def applyForm(
+    employerId: Employer.Id,
+    locationId: Location.Id,
+    title: String,
+    address: String,
+    description: String,
+    main_image:  String,
+    thumbnail_image : String,
+    price      : Int,
+    categoryId1: Category.Id,
+    categoryId2: Category.Id,
+    categoryId3: Category.Id,
+    job_date: Date
+  ) = EmployerPost(
+    None, employerId, locationId, title, address, description, main_image, thumbnail_image, price,
+    categoryId1, categoryId2, categoryId3, false, LocalDate.MAX
+  )
+
+  val formForEmployerPost = Form(
     mapping(
       "employerId" -> longNumber,
       "locationId" -> nonEmptyText,
@@ -85,7 +76,8 @@ object EmployerPost {
       "categoryId2"-> longNumber,
       "categoryId3"-> longNumber,
       "job_date"   -> date
-    )(EmployerPostAdd.apply)(EmployerPostAdd.unapply)
+    )(EmployerPost.applyForm)(EmployerPost.unapply(_).map(
+      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, t._10, t._11, t._12, new Date())
+    ))
   )
 }
-

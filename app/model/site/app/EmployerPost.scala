@@ -12,7 +12,7 @@ case class SiteViewValueEmployerPostIndex(
   posts: Seq[EmployerPost]
 )
 
-case class SiteViewValueEmployerPostAdd(
+case class SiteViewValueEmployerPost(
   layout: ViewValuePageLayout,
   location: Seq[Location]
 )

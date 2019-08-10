@@ -3,8 +3,7 @@ package controllers.employer_post
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
 // persistence: 永続化
-import persistence.employer_post.model.EmployerPost
-import persistence.employer_post.model.EmployerPost.formForEmployerPostAdd
+import persistence.employer_post.model.EmployerPost.formForEmployerPost
 import persistence.employer_post.dao.EmployerPostDAO
 
 import persistence.employer.dao.EmployerDAO
@@ -13,11 +12,7 @@ import persistence.geo.model.Location
 import persistence.geo.dao.LocationDAO
 // model
 import model.site.app.SiteViewValueEmployerPostIndex
-import model.site.app.SiteViewValueEmployerPostAdd
-// import model.site.facility.SiteViewValueFacilityShow
-// import model.site.facility.SiteViewValueFacilityEdit
-// import model.site.facility.SiteViewValueFacilityAdd
-
+import model.site.app.SiteViewValueEmployerPost
 import model.component.util.ViewValuePageLayout
 
 
@@ -48,22 +43,22 @@ class EmployerPostController @javax.inject.Inject()(
     for {
       locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
     } yield {
-      val vv = SiteViewValueEmployerPostAdd(
+      val vv = SiteViewValueEmployerPost(
         layout   = ViewValuePageLayout(id = request.uri),
         location = locSeq
       )
-      Ok(views.html.site.employer_post.add.Main(vv, formForEmployerPostAdd))
+      Ok(views.html.site.employer_post.add.Main(vv, formForEmployerPost))
     }
   }
 
   def create = Action.async { implicit request =>   
-    formForEmployerPostAdd.bindFromRequest.fold(
+    formForEmployerPost.bindFromRequest.fold(
       errors => {
         for {
           locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
         } yield {
           println(errors)
-          val vv = SiteViewValueEmployerPostAdd(
+          val vv = SiteViewValueEmployerPost(
             layout   = ViewValuePageLayout(id = request.uri),
             location = locSeq
           )
@@ -74,26 +69,13 @@ class EmployerPostController @javax.inject.Inject()(
         for {
           locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
           employer <- employerDao.get(1)
-          _ <- employerPostDao.create(
-            employer.get.id.get,
-            form.locationId,
-            form.title,
-            form.address,
-            form.description,
-            // form.main_image,
-            // form.thumbnail_image,
-            form.price,
-            // form.categoryId1,
-            // form.categoryId2,
-            // form.categoryId3,
-            // form.job_date,
-          )
+          _ <- employerPostDao.create(form)
         } yield {          
-          val vv = SiteViewValueEmployerPostAdd(
+          val vv = SiteViewValueEmployerPost(
             layout   = ViewValuePageLayout(id = request.uri),
             location = locSeq
           )
-          Ok(views.html.site.employer_post.add.Main(vv, formForEmployerPostAdd))
+          Ok(views.html.site.employer_post.add.Main(vv, formForEmployerPost))
         }
       }
     )

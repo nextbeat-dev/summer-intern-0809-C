@@ -1,14 +1,12 @@
 package persistence.employer_post.dao
 
-import java.time.LocalDateTime
-import java.time.LocalDate
+import java.time.{LocalDate, LocalDateTime, ZoneId}
 import java.util.Date
-import scala.concurrent.Future
 
+import scala.concurrent.Future
 import slick.jdbc.JdbcProfile
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
-
 import persistence.employer_post.model.EmployerPost
 import persistence.geo.model.Location
 import persistence.employer.model.Employer
@@ -43,18 +41,14 @@ class EmployerPostDAO @javax.inject.Inject()(
       slick.result
     }
   
-  def create(employerId: Employer.Id, locationId: Location.Id ,title: String, address: String, description: String, price: Int): Future[EmployerPost.Id] = 
+  def create(data: EmployerPost): Future[EmployerPost.Id] =
     db.run {
-      slick
-        .map(
-          p => (
-            p.employerId, p.locationId, p.title,
-            p.address, p.description, p.price
-          )
-        ) += ((
-          employerId, locationId, title,
-          address, description, price
-          ))
+      data.id match {
+        case None    => slick returning slick.map(_.id) += data
+        case Some(_) => DBIO.failed(
+          new IllegalArgumentException("The given object is already assigned id.")
+        )
+      }
     }
   
   def update(id: Long, title: String, address: String, description: String, price: Int):  Unit  = 
@@ -117,7 +111,7 @@ class EmployerPostDAO @javax.inject.Inject()(
       Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
-  type TableElementType = (
+  type TableElementTuple = (
     EmployerPost.Id, Employer.Id, Location.Id, String, String, String, String, String, Int,
     Category.Id, Category.Id, Category.Id, Boolean, LocalDate, LocalDateTime, LocalDateTime
   )
@@ -128,16 +122,11 @@ class EmployerPostDAO @javax.inject.Inject()(
       updatedAt, createdAt
     ) <> (
       /** The bidirectional mappings : Tuple(table) => Model */
-      (t: TableElementType) => 
-        EmployerPost(
-          Some(t._1), t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, t._10, t._11, t._12, t._13, localDate2Date(t._14), t._15, t._16
-        ),
+      (EmployerPost.apply _).tupled,
       /** The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => EmployerPost.unapply(v).map(_.copy(
-        _14 = date2LocalDate(_14),
-        _15 = LocalDateTime.now,
-      )
-      )
+        _15 = LocalDateTime.now
+      ))
     )
   }
 }
