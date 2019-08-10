@@ -35,6 +35,14 @@ case class ApplicantPost(
   createdAt:   LocalDateTime = LocalDateTime.now   // データ作成日
 )
 
+case class ApplicantItem(
+  applicantPost: ApplicantPost,
+  locationName: String,
+  category1: String,
+  category2: String,
+  category3: String
+)
+
 // 施設検索
 // case class ApplicantPostSearch(
 //   locationIdOpt: Option[Location.Id]
