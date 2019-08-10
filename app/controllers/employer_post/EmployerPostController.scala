@@ -6,6 +6,8 @@ import play.api.mvc.{AbstractController, MessagesControllerComponents}
 import persistence.employer_post.model.EmployerPost
 import persistence.employer_post.dao.EmployerPostDAO
 
+import persistence.employer.dao.EmployerDAO
+
 import persistence.geo.model.Location
 import persistence.geo.dao.LocationDAO
 // model
@@ -22,6 +24,7 @@ import model.component.util.ViewValuePageLayout
 class EmployerPostController @javax.inject.Inject()(
   // val: immutable, var: mutable
   val employerPostDao: EmployerPostDAO,
+  val employerDao: EmployerDAO,
   val daoLocation: LocationDAO,
   cc: MessagesControllerComponents
 ) extends AbstractController(cc) with I18nSupport {
@@ -41,7 +44,14 @@ class EmployerPostController @javax.inject.Inject()(
 
   def add = TODO
 
-  def create = TODO
+  def create = Action { implicit request
+    val body = request.body
+    val employerId = employerDao.get(1)
+    employerPostDao.create(
+      employerId,
+
+    )
+  }
 
   def show(id: Long) = TODO
 

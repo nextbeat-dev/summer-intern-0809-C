@@ -41,6 +41,39 @@ class EmployerPostDAO @javax.inject.Inject()(
     db.run {
       slick.result
     }
+  
+  def create(employerId: Employer.Id, locationId: Location.Id ,title: String, address: String, description: String): Unit = 
+    db.run {
+      slick
+        .map(
+          p => (
+            p.employerId, p.locationId, p.title,
+            p.address, p.description, p.price
+          )
+        ) += ((
+          employerId, locationId, title,
+          address, description, price
+          ))
+    }
+  
+  def update(id: Long, title: String, address: String, description: String, price: Int):  Unit  = 
+    db.run {
+      slick
+        .filter(_.id === id)
+        .map(
+          p => (p.title, p.address, p.description, p.price)        
+        )
+        .update((
+          title, address, description, price
+        ))
+    }    
+
+  def delete(id: Long): Unit = 
+    db.run {
+      slick
+        .filter(_.id === id)
+        .delete
+    }
 
   /**
    * 地域から施設を取得
