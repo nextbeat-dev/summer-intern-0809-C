@@ -6,7 +6,7 @@ import play.api.mvc.{AbstractController, MessagesControllerComponents}
 import persistence.applicant_post.model.ApplicantPost.formForApplicantPost
 import persistence.applicant_post.dao.ApplicantPostDAO
 
-import persistence.employer.dao.EmployerDAO
+import persistence.applicant.dao.ApplicantDAO
 
 import persistence.geo.model.Location
 import persistence.geo.dao.LocationDAO
@@ -23,8 +23,8 @@ import model.component.util.ViewValuePageLayout
 //~~~~~~~~~~~~~~~~~~~~~
 class ApplicantPostController @javax.inject.Inject()(
   // val: immutable, var: mutable
-  val employerPostDao: ApplicantPostDAO,
-  val employerDao: EmployerDAO,
+  val applicantPostDao: ApplicantPostDAO,
+  val applicantDao: ApplicantDAO,
   val daoLocation: LocationDAO,
   val categoryDao: CategoryDAO,
   cc: MessagesControllerComponents
@@ -34,14 +34,14 @@ class ApplicantPostController @javax.inject.Inject()(
 
   def show(id: Long) = Action.async { implicit request =>
     for {
-      employerPost <- employerPostDao.get(id)
-      location <- daoLocation.get(employerPost.get.locationId)
-      categorySeqId = Seq(employerPost.get.categoryId1, employerPost.get.categoryId2, employerPost.get.categoryId3)
+      applicantPost <- applicantPostDao.get(id)
+      location <- daoLocation.get(applicantPost.get.locationId)
+      categorySeqId = Seq(applicantPost.get.categoryId1, applicantPost.get.categoryId2, applicantPost.get.categoryId3)
       categorys <- categoryDao.filterSeqId(categorySeqId)
     } yield {
       val vv = SiteViewValueApplicantPostShow(
         layout = ViewValuePageLayout(id = request.uri),
-        post = employerPost.get,
+        post = applicantPost.get,
         location = location.get,
         categorys = categorys
       )
@@ -52,7 +52,7 @@ class ApplicantPostController @javax.inject.Inject()(
 
   def index = Action.async { implicit request =>
     for {
-        postSeq <- employerPostDao.findAll
+        postSeq <- applicantPostDao.findAll
     } yield {
         val vv = SiteViewValueApplicantPostIndex(
             layout = ViewValuePageLayout(id = request.uri),
@@ -91,8 +91,8 @@ class ApplicantPostController @javax.inject.Inject()(
       form   => {        
         for {
           locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
-          employer <- employerDao.get(1)
-          _ <- employerPostDao.create(form)
+          applicant <- applicantDao.get(1)
+          _ <- applicantPostDao.create(form)
         } yield {          
           val vv = SiteViewValueApplicantPost(
             layout   = ViewValuePageLayout(id = request.uri),
