@@ -36,7 +36,14 @@ class EmployerPostController @javax.inject.Inject()(
 
   def create = TODO
 
-  def show(id: Long) = TODO
+  def show(id: Long) = Action.async { implicit request =>
+    for {
+      employerPost <- employerDao.get(id)
+      location <- 
+    } yield {
+
+    }
+  }
 
   def edit(id: Long) = TODO
 
