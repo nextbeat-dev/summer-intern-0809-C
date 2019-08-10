@@ -30,28 +30,11 @@ class EmployerPostController @javax.inject.Inject()(
 ) extends AbstractController(cc) with I18nSupport {
   implicit lazy val executionContext = defaultExecutionContext
 
-  def index = Action.async { implicit request =>
-    for {
-        postSeq <- employerPostDao.findAll
-    } yield {
-        val vv = SiteViewValueEmployerPostIndex(
-            layout = ViewValuePageLayout(id = request.uri),
-            posts = postSeq
-        )
-        Ok(views.html.site.employer_post.index.Main(vv))
-    }
-  }
+  def index = TODO
 
   def add = TODO
 
-  def create = Action { implicit request
-    val body = request.body
-    val employerId = employerDao.get(1)
-    employerPostDao.create(
-      employerId,
-
-    )
-  }
+  def create = TODO
 
   def show(id: Long) = TODO
 
