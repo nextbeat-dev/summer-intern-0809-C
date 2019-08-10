@@ -2,6 +2,8 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+GET /                                 controllers.app.TopController.index
+
 # --[ 登録処理 ]----------------------------------------------------------------
 GET  /app/new-user                    controllers.app.NewUserController.viewForApp
 POST /app/new-user                    controllers.app.NewUserCommitController.application
