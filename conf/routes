@@ -25,6 +25,7 @@ GET     /employer_post/:id/edit          controllers.employer_post.EmployerPostC
 PUT     /employer_post/:id               controllers.employer_post.EmployerPostController.update(id: Long)
 DELETE  /employer_post/:id               controllers.employer_post.EmployerPostController.destroy(id: Long)
 
+<<<<<<< HEAD
 # --[ 学生ページ ]----------------------------------------------------------------
 GET     /applicant_post                   controllers.applicant_post.ApplicantPostController.index
 GET     /applicant_post/new               controllers.applicant_post.ApplicantPostController.add
@@ -35,14 +36,17 @@ PUT     /applicant_post/:id               controllers.applicant_post.ApplicantPo
 DELETE  /applicant_post/:id               controllers.applicant_post.ApplicantPostController.destroy(id: Long)
 
 
+=======
+>>>>>>> 80e999689ec9963e5be2496b46591710231b54c4
 # --[ 募集者登録ページ ]----------------------------------------------------------------
 
-# --[ ログインページ ]----------------------------------------------------------------
-GET  /login/employer                  controllers.login.LoginController.login
-POST /login/employer                  controllers.login.LoginController.login
+# --[ 応募者ログインページ ]----------------------------------------------------------------
+GET  /login/applicant                 controllers.login.LoginController.applicantLogin
+POST /login/applicant                 controllers.login.LoginController.applicantAuth
 
-GET  /login/applicant                 controllers.login.LoginController.login
-POST /login/applicant                 controllers.login.LoginController.login
+# --[ 募集者ログインページ ]----------------------------------------------------------------
+GET  /login/employer                  controllers.login.LoginController.employerLogin
+POST /login/employer                  controllers.login.LoginController.employerAuth
 
 # --[ 特集ページ ]--------------------------------------------------------------
 GET  /recruit/intership-for-summer-21 controllers.recruit.InternshipForSummer21Controller.view

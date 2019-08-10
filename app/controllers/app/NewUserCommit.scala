@@ -17,6 +17,8 @@ import persistence.udb.model.User.formForNewUser
 import model.site.app.SiteViewValueNewUser
 import model.component.util.ViewValuePageLayout
 
+import scala.concurrent.Future
+
 // 登録: 新規ユーザ
 //~~~~~~~~~~~~~~~~~~~~~
 class NewUserCommitController @Inject()(
@@ -51,6 +53,10 @@ class NewUserCommitController @Inject()(
         }
       }
     )
+  }
+
+  def test = Action.async { implicit request =>
+      Future(Ok(views.html.site.app.new_user.Test()))
   }
 
 }

@@ -20,3 +20,7 @@ case class SiteViewValueNewApplicant(
   layout:   ViewValuePageLayout,
   location: Seq[Location]
 )
+
+case class SiteViewValueApplicantLogin(
+  layout:   ViewValuePageLayout
+)
