@@ -9,19 +9,23 @@
 @views.html.common.layout.InnerContent("site-app-new-user-form", "content") {
   @** --[ 見出し ]---------------------------------------------------------- *@
   <h3 class="content__section header">
-    <span class="header__title">新規求人投稿</span>
+    <span class="header__title">新規求職投稿</span>
   </h3>
 
   @** --[ フォーム ]-------------------------------------------------------- *@
   <!-- 必要項目
-    "location_id" VARCHAR(8)   NOT NULL,
-    "title"        VARCHAR(255) NOT NULL,
-    "description" TEXT         DEFAULT NULL,
-    "price"       INT,
-    "category_id_1" INT        DEFAULT NULL,
-    "category_id_2" INT        DEFAULT NULL,
-    "category_id_3" INT        DEFAULT NULL,
-    "job_date"    DATE   NOT NULL,
+    val formForApplicantPost = Form(
+    mapping(
+      "applicantId" -> longNumber,
+      "locationId" -> nonEmptyText,
+      "title"      -> nonEmptyText,
+      "destination"    -> nonEmptyText,
+      "description"-> text,
+      "categoryId1"-> longNumber,
+      "categoryId2"-> longNumber,
+      "categoryId3"-> longNumber,
+      "free_date"   -> date
+    )
   -->
   <div class="content__section form">
     @helper.form(action = controllers.applicant_post.routes.ApplicantPostController.create()) {
