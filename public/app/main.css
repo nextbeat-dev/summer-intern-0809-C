@@ -403,6 +403,10 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
     font-weight: bold;
     margin-bottom: 10px; }
+  #site-app-new-user-form .content__section.form .form__section.common input {
+    width: 100%; }
+  #site-app-new-user-form .content__section.form .form__section.common-min input {
+    width: 200px; }
   #site-app-new-user-form .content__section.form .form__section.name-container {
     width: 500px;
     display: table;
@@ -420,6 +424,10 @@ h1, h2, h3, h4, h5, h6 {
     width: 460px; }
   #site-app-new-user-form .content__section.form .form__section.address input {
     width: 100%; }
+  #site-app-new-user-form .content__section.form .form__section.description #description {
+    width: 100%;
+    height: 120px;
+    resize: none; }
   #site-app-new-user-form .content__section.form .form__section.submit {
     margin-top: 50px;
     text-align: center; }

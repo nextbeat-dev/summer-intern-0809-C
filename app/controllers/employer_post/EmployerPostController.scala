@@ -1,7 +1,10 @@
 package controllers.employer_post
 
+import mvc.action.AuthenticationAction
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
+
+import scala.concurrent.Future
 // persistence: 永続化
 import persistence.employer_post.model.EmployerPost.formForEmployerPost
 import persistence.employer_post.dao.EmployerPostDAO
@@ -31,6 +34,8 @@ class EmployerPostController @javax.inject.Inject()(
 ) extends AbstractController(cc) with I18nSupport {
   implicit lazy val executionContext = defaultExecutionContext
 
+  val userTypeApplicant = 0
+  val userTypeEmployer  = 1
 
   def show(id: Long) = Action.async { implicit request =>
     for {
@@ -62,46 +67,60 @@ class EmployerPostController @javax.inject.Inject()(
     }
   }
 
-  def add = Action.async { implicit request =>
-    for {
-      locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
-    } yield {
-      val vv = SiteViewValueEmployerPost(
-        layout   = ViewValuePageLayout(id = request.uri),
-        location = locSeq
-      )
-      Ok(views.html.site.employer_post.add.Main(vv, formForEmployerPost))
-    }
-  }
-
-  def create = Action.async { implicit request =>   
-    formForEmployerPost.bindFromRequest.fold(
-      errors => {
+  def add = (Action andThen AuthenticationAction(userTypeEmployer)).async { implicit request =>
+    val eid = request.session.get("eid")
+    eid match {
+      case Some(x) => {
         for {
           locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
         } yield {
-          println(errors)
           val vv = SiteViewValueEmployerPost(
             layout   = ViewValuePageLayout(id = request.uri),
-            location = locSeq
-          )
-          BadRequest(views.html.site.employer_post.add.Main(vv, errors))
-        }
-      },
-      form   => {        
-        for {
-          locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
-          employer <- employerDao.get(1)
-          _ <- employerPostDao.create(form)
-        } yield {          
-          val vv = SiteViewValueEmployerPost(
-            layout   = ViewValuePageLayout(id = request.uri),
-            location = locSeq
+            location = locSeq,
+            eid      = x.toLong
           )
           Ok(views.html.site.employer_post.add.Main(vv, formForEmployerPost))
         }
       }
-    )
+      case None => {
+        Future(Redirect("/", 301))
+      }
+    }
+
+
+  }
+
+  def create = (Action andThen AuthenticationAction(userTypeEmployer)).async { implicit request =>
+    val eid = request.session.get("eid")
+    eid match {
+      case Some(x) =>{
+        formForEmployerPost.bindFromRequest.fold(
+          errors => {
+            for {
+              locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
+            } yield {
+              val vv = SiteViewValueEmployerPost(
+                layout   = ViewValuePageLayout(id = request.uri),
+                location = locSeq,
+                eid = x.toLong
+              )
+              BadRequest(views.html.site.employer_post.add.Main(vv, errors))
+            }
+          },
+          form   => {
+            for {
+              _ <- employerPostDao.create(form)
+            } yield {
+              Redirect("/employer_post")
+            }
+          }
+        )
+      }
+      case None    =>{
+        Future(Redirect("/", 301))
+      }
+    }
+
   }
 
 

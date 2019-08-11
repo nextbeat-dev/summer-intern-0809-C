@@ -49,14 +49,12 @@ class LoginController @javax.inject.Inject()(
         } yield {
           loginInfo match {
             case Some(x) => {
-              println(x.aid)
               Redirect("/employer_post")
                 .withSession(
-                  request.session + ("id" -> x.aid.getOrElse(0).toString)
+                  request.session + ("aid" -> x.aid.getOrElse(0).toString)
                 )
             }
             case None    => {
-              println("NO")
               val vv = SiteViewValueApplicantLogin(
                 layout = ViewValuePageLayout(id = request.uri)
               )
@@ -86,6 +84,10 @@ class LoginController @javax.inject.Inject()(
       layout = ViewValuePageLayout(id = request.uri)
     )
     Future(Ok(views.html.site.login.applicant.Main(vv, formForApplicantLogin)))
+  }}
+
+  def logout = Action.async { implicit request => {
+    Future(Redirect("/").withNewSession)
   }}
 
 }

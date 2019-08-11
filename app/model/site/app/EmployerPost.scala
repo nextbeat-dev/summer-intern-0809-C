@@ -2,7 +2,7 @@ package model.site.app
 
 import model.component.util.ViewValuePageLayout
 import persistence.category.model.Category
-
+import persistence.employer.model.Employer
 import persistence.employer_post.model.EmployerPost
 import persistence.geo.model.Location
 
@@ -21,6 +21,7 @@ case class SiteViewValueEmployerPostShow(
 )
 
 case class SiteViewValueEmployerPost(
-  layout: ViewValuePageLayout,
-  location: Seq[Location]
+  layout:   ViewValuePageLayout,
+  location: Seq[Location],
+  eid:      Employer.Id
 )

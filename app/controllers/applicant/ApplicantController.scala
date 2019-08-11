@@ -52,7 +52,6 @@ cc: MessagesControllerComponents
         for {
           locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
         } yield {
-          println(errors)
           val vv = SiteViewValueNewApplicant(
             layout   = ViewValuePageLayout(id = request.uri),
             location = locSeq
