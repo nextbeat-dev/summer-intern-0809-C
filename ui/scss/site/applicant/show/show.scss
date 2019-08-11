@@ -1,0 +1,32 @@
+#applicant-show {
+    height: 100vh;
+}
+
+.applicant-show-img {
+    position: relative;
+    z-index: -10;
+    width: 100vw;
+    opacity: 0.7;
+
+    img {
+        width: 100vw;        
+        top: -20vh;
+        position: absolute;
+    }
+}
+
+#applicant-show-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    button {
+        margin: 40vh 5vw 0 5vw; 
+        width: 15vw;
+        height: 10vh; 
+    }
+}
+
+.button_strong {
+    font-size: 150%;
+}
