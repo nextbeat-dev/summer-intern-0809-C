@@ -15,7 +15,7 @@
       <div class="catchphrase__title">
         @views.html.common.component.image.ResponsiveImage(
           path    = "site/recruit/internship_for_summer_21/01_title.png",
-          alt     = "未来の「ふつう」を次々と。",
+          alt     = "若者よ、忙しいときだけ手伝って！",
           classes = "visual__image"
         )
       </div>
@@ -23,17 +23,26 @@
 
     @** タイトル *@
     <div class="content__section title">
-      <h2  class="title__section main">SUMMER INTERNSHIP 2019!</h2>
-      <div class="title__section sub">【 0→1事業創出インターン 】</div>
+      <h2  class="title__section main">まごのてHR</h2>
+      <div class="title__section sub">【 地域と若者を繋ぐ 】</div>
     </div>
 
     @** エントリーボタン *@
-    <div class="content__secion action">
-      @views.html.common.component.button.FlatButton(
-        classes    = "action__to-entry accent",
-        title      = "ENTRY",
-        navigateTo = "https://recruit.jobcan.jp/nextbeat/entry/new/42680"
-      )
-    </div>
+   <div id="list_page_button">
+      <div id="employer">
+          @views.html.common.component.button.FlatButton(
+            classes    = "action__to-entry accent",
+            title      = "求人一覧",
+            navigateTo = "/employer_post"
+          )
+        </div>
+        <div id="applicant">
+          @views.html.common.component.button.FlatButton(
+            classes    = "action__to-entry accent",
+            title      = "若者一覧",
+            navigateTo = "/applicant_post"
+          )
+        </div>
+   </div>
   </div>
 }
