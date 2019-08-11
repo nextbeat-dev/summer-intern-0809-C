@@ -64,16 +64,17 @@ class ApplicantPostController @javax.inject.Inject()(
 
   def show(id: Long) = Action.async { implicit request =>
     for {
-      applicantPost <- applicantPostDao.get(id)
+      applicantPost <- applicantPostDao.get(id)           
       location <- daoLocation.get(applicantPost.get.locationId)
-      categorySeqId = Seq(applicantPost.get.categoryId1, applicantPost.get.categoryId2, applicantPost.get.categoryId3)
-      categorys <- categoryDao.filterSeqId(categorySeqId)
+    //   categorySeqId = Seq(applicantPost.get.categoryId1, applicantPost.get.categoryId2, applicantPost.get.categoryId3)
+    //   categorys <- categoryDao.filterSeqId(categorySeqId)
     } yield {
+      println(applicantPost) 
       val vv = SiteViewValueApplicantPostShow(
         layout = ViewValuePageLayout(id = request.uri),
         post = applicantPost.get,
         location = location.get,
-        categorys = categorys
+        // categorys = categorys
       )
 
       Ok(views.html.site.applicant_post.show.Main(vv))

@@ -1,4 +1,4 @@
-CREATE TABLE "employer_login" (
+CREATE TABLE IF NOT EXISTS "employer_login" (
   "eid"        INT AUTO_INCREMENT(1),
   "email"      VARCHAR(255) NOT NULL,
   "password"   VARCHAR(255) NOT NULL,
