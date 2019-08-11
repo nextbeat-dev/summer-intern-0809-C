@@ -528,6 +528,30 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 50px;
     text-align: center; }
 
+#employer-list {
+  margin: 0 10vw; }
+
+.employer-list-container {
+  padding: 0 2.5vw;
+  display: flex;
+  flex-wrap: wrap; }
+  .employer-list-container .title {
+    text-align: center;
+    font-weight: bold; }
+  .employer-list-container .employer-item {
+    width: 13vw;
+    height: 40vh;
+    margin: 2.5vh 2.5vw; }
+  .employer-list-container .employer-option {
+    padding: 10%;
+    font-size: 90%;
+    line-height: 2rem; }
+
+.kawai__image {
+  width: 90%;
+  margin: 5%;
+  text-align: center; }
+
 #site-applicant-login-form.content {
   border: 1px solid #eeeeee; }
 

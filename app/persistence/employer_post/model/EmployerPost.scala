@@ -37,6 +37,15 @@ case class EmployerPost(
   updatedAt:   LocalDateTime = LocalDateTime.now,  // データ更新日
   createdAt:   LocalDateTime = LocalDateTime.now   // データ作成日
 )
+
+case class EmployerItem(
+  employerPost: EmployerPost,
+  locationName: String,
+  category1: String,
+  category2: String,
+  category3: String
+)
+
 // コンパニオンオブジェクト
 //~~~~~~~~~~~~~~~~~~~~~~~~~~
 object EmployerPost {

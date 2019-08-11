@@ -22,11 +22,11 @@
   <div class="content__section content">
     @for(post <- vv.posts) {
       <article class="facility-list-item">
-        <a href="employer_post/@post.id">
+        <a href="employer_post/@post.employerPost.id">
           <div class="item-panel__wrapper">
             <header class="facility-item__header">
               <div class="title">
-                @post.title
+                @post.employerPost.title
               </div>
             </header>
             <section class="facility-item__content">
@@ -35,13 +35,13 @@
                   <div class="address">
                     <label class="inline">住所:</label>
                     <p class="inline">
-                      @post.address
+                      @post.locationName
                     </p>
                   </div>
                   <div class="description">
                     <label class="inline">備考:</label>
                     <p class="inline">
-                      @post.description
+                      @post.employerPost.description
                     </p>
                   </div>
                 </div>

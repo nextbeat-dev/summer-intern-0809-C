@@ -12,39 +12,45 @@
 @(vv: SiteViewValueApplicantPostIndex)(implicit messages: play.api.i18n.Messages)
 
 @** 施設検索一覧 *@
-@views.html.common.layout.InnerContent("site-app-new-user-form", "content") {
+@views.html.common.layout.InnerContent("site-app-new-user-form employer-list", "content") {
   @** --[ 見出し ]---------------------------------------------------------- *@
   <h3 class="content__section header">
     <span class="header__title">学生一覧</span>
   </h3>
 
   @** --[ 一覧 ]-------------------------------------------------------- *@
-  <div class="content__section content">
+  <div class="employer-list-container">
     @for(post <- vv.posts) {
-      <article class="facility-list-item">
+      <article class="employer-item">
         <a href="applicant_post/@post.applicantPost.id">
-          <div class="item-panel__wrapper">
-            <header class="facility-item__header">
+          @views.html.common.component.image.ResponsiveImage(
+            path    = "site/recruit/internship_for_summer_21/03_mentor-kawai.png",
+            alt     = "未来の「ふつう」を次々と。",
+            classes = "kawai__image"
+          )
+          <div class="item__wrapper">
+            <header class="employer-title">
               <div class="title">
                 @post.applicantPost.title
               </div>
             </header>
-            <section class="facility-item__content">
-              <div>
-                <div class="item-panel__content">
-                  <div class="destination">
-                    <label class="inline">住所:</label>
-                    <p class="inline">
-                      @post.applicantPost.destination
-                    </p>
-                  </div>
-                  <div class="description">
-                    <label class="inline">備考:</label>
-                    <p class="inline">
-                      @post.applicantPost.description
-                    </p>
-                  </div>
-                </div>
+            <section class="employer-option">
+              <section class="employer-description">
+                <div>一言　:  @post.applicantPost.description</div>
+              </section>
+              <div class="employer-location">
+                <div>行き先: @post.locationName</div>
+              </div>
+              <div class="employer-category-list">
+                @if(post.category1 == "None") {
+                  <div>@post.category1</div>
+                }
+                @if(post.category2 == "None") {
+                  <div>@post.category2</div>
+                }
+                @if(post.category3 == "None") {
+                  <div>@post.category3</div>
+                }
               </div>
             </section>
           </div>
