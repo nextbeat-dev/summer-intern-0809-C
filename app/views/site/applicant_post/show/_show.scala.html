@@ -14,11 +14,51 @@
 @views.html.common.layout.InnerContent("site-app-new-user-form", "content") {
   @** --[ 見出し ]---------------------------------------------------------- *@
   <h3 class="content__section header">
-    <span class="header__title">詳細画面</span>
+    <span class="header__title">求職詳細</span>
   </h3>
-
-  <div>
-      <div>@vv.post.title</div>
-  </div>
-
+  <table class="detail_table">
+    <tr>
+      <th>名前</th>
+      <td>さとう</td>
+    </tr>
+  
+    <tr>
+      <th>行く予定の場所</th>
+      <td>@vv.post.destination</td>
+    </tr>
+  
+    <tr>
+      <th>アピール</th>
+      <td>@vv.post.description</td>
+    </tr>
+  </table>
 }
+
+
+<div class="content__secion action button_wrapper">
+  @views.html.common.component.button.FlatButton(
+    classes    = "action__to-entry accent",
+    title      = "手伝いに来てもらう",
+    navigateTo = "https://recruit.jobcan.jp/nextbeat/entry/new/42680"
+  )
+</div>
+
+<style>
+.button_wrapper{
+   text-align:center;
+   color: rgb(235, 159, 216);   
+}
+.detail_table {
+  text-align:center;
+  width: 70%;
+}
+.detail_table th{
+  padding : 20px 10px;
+  width: 30%;
+  background-color: rgb(254, 222, 246);
+}
+.detail_table td{
+  padding : 20px 10px;
+  width: 70%;
+}
+</style>
