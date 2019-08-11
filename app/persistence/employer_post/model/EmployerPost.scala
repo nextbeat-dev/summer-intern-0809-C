@@ -29,9 +29,9 @@ case class EmployerPost(
   main_image: String,
   thumbnail_image: String,
   price: Int,
-  categoryId1: Category.Id,
-  categoryId2: Category.Id,
-  categoryId3: Category.Id,
+  categoryId1: Option[Category.Id],
+  categoryId2: Option[Category.Id],
+  categoryId3: Option[Category.Id],
   done: Boolean,
   job_date: LocalDate,
   updatedAt:   LocalDateTime = LocalDateTime.now,  // データ更新日
@@ -60,9 +60,9 @@ object EmployerPost {
     main_image:  String,
     thumbnail_image : String,
     price      : Int,
-    categoryId1: Category.Id,
-    categoryId2: Category.Id,
-    categoryId3: Category.Id,
+    categoryId1: Option[Category.Id],
+    categoryId2: Option[Category.Id],
+    categoryId3: Option[Category.Id],
     job_date: Date
   ) = EmployerPost(
     None, employerId, locationId, title, address, description, main_image, thumbnail_image, price,
@@ -79,9 +79,9 @@ object EmployerPost {
       "main_image" -> text,
       "thumbnail_image"-> text,
       "price"      -> number(min = 0),
-      "categoryId1"-> longNumber,
-      "categoryId2"-> longNumber,
-      "categoryId3"-> longNumber,
+      "categoryId1"-> optional(longNumber),
+      "categoryId2"-> optional(longNumber),
+      "categoryId3"-> optional(longNumber),
       "job_date"   -> date
     )(EmployerPost.applyForm)(EmployerPost.unapply(_).map(
       t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, t._10, t._11, t._12, localDate2Date(t._14))

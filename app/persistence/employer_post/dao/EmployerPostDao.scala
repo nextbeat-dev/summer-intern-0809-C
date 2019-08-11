@@ -86,22 +86,22 @@ class EmployerPostDAO @javax.inject.Inject()(
 
 
     // Table's columns
-    def id              = column[EmployerPost.Id] ("id", O.PrimaryKey, O.AutoInc)
-    def employerId      = column[Employer.Id]     ("employer_id")
-    def locationId      = column[Location.Id]     ("location_id")
-    def title           = column[String]          ("title")
-    def address         = column[String]          ("address")
-    def description     = column[String]          ("description")
-    def main_image      = column[String]          ("main_image")
-    def thumbnail_image = column[String]          ("thumbnail_image")
-    def price           = column[Int]             ("price")
-    def category_id_1   = column[Category.Id]     ("category_id_1")
-    def category_id_2   = column[Category.Id]     ("category_id_2")
-    def category_id_3   = column[Category.Id]     ("category_id_3")
-    def done            = column[Boolean]         ("done")
-    def job_date        = column[LocalDate]       ("job_date")
-    def updatedAt       = column[LocalDateTime]   ("updated_at")
-    def createdAt       = column[LocalDateTime]   ("created_at")
+    def id              = column[EmployerPost.Id]     ("id", O.PrimaryKey, O.AutoInc)
+    def employerId      = column[Employer.Id]         ("employer_id")
+    def locationId      = column[Location.Id]         ("location_id")
+    def title           = column[String]              ("title")
+    def address         = column[String]              ("address")
+    def description     = column[String]              ("description")
+    def main_image      = column[String]              ("main_image")
+    def thumbnail_image = column[String]              ("thumbnail_image")
+    def price           = column[Int]                 ("price")
+    def category_id_1   = column[Option[Category.Id]] ("category_id_1")
+    def category_id_2   = column[Option[Category.Id]] ("category_id_2")
+    def category_id_3   = column[Option[Category.Id]] ("category_id_3")
+    def done            = column[Boolean]             ("done")
+    def job_date        = column[LocalDate]           ("job_date")
+    def updatedAt       = column[LocalDateTime]       ("updated_at")
+    def createdAt       = column[LocalDateTime]       ("created_at")
 
     def date2LocalDate(date: Date): LocalDate = {
       date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

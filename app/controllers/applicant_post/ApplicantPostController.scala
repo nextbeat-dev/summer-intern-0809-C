@@ -3,19 +3,23 @@ package controllers.applicant_post
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
 // persistence: 永続化
+import persistence.applicant_post.model.ApplicantPost.formForApplicantPost
 import persistence.applicant_post.dao.ApplicantPostDAO
 
 import persistence.applicant.dao.ApplicantDAO
 
-import persistence.geo.dao.LocationDAO
 // model
+import persistence.applicant_post.model.ApplicantItem
+
+import persistence.geo.model.Location
+import persistence.geo.dao.LocationDAO
 import model.site.app.SiteViewValueApplicantPostIndex
 
-import model.component.util.ViewValuePageLayout
 import persistence.category.dao.CategoryDAO
-import persistence.applicant_post.model.ApplicantItem
-import persistence.geo.model.Location
+import model.site.app.SiteViewValueApplicantPostShow
 
+import model.site.app.SiteViewValueApplicantPost
+import model.component.util.ViewValuePageLayout
 
 
 // 施設
@@ -58,11 +62,65 @@ class ApplicantPostController @javax.inject.Inject()(
     }
   }
 
-  def add = TODO
+  def show(id: Long) = Action.async { implicit request =>
+    for {
+      applicantPost <- applicantPostDao.get(id)
+      location <- daoLocation.get(applicantPost.get.locationId)
+      categorySeqId = Seq(applicantPost.get.categoryId1, applicantPost.get.categoryId2, applicantPost.get.categoryId3)
+      categorys <- categoryDao.filterSeqId(categorySeqId)
+    } yield {
+      val vv = SiteViewValueApplicantPostShow(
+        layout = ViewValuePageLayout(id = request.uri),
+        post = applicantPost.get,
+        location = location.get,
+        categorys = categorys
+      )
 
-  def create = TODO
+      Ok(views.html.site.applicant_post.show.Main(vv))
+    }
+  }
 
-  def show(id: Long) = TODO
+  def add = Action.async { implicit request =>
+    for {
+      locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
+    } yield {
+      val vv = SiteViewValueApplicantPost(
+        layout   = ViewValuePageLayout(id = request.uri),
+        location = locSeq
+      )
+      Ok(views.html.site.applicant_post.add.Main(vv, formForApplicantPost))
+    }
+  }
+
+  def create = Action.async { implicit request =>   
+    formForApplicantPost.bindFromRequest.fold(
+      errors => {
+        for {
+          locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
+        } yield {
+          println(errors)
+          val vv = SiteViewValueApplicantPost(
+            layout   = ViewValuePageLayout(id = request.uri),
+            location = locSeq
+          )
+          BadRequest(views.html.site.applicant_post.add.Main(vv, errors))
+        }
+      },
+      form   => {        
+        for {
+          locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
+          applicant <- applicantDao.get(1)
+          _ <- applicantPostDao.create(form)
+        } yield {          
+          val vv = SiteViewValueApplicantPost(
+            layout   = ViewValuePageLayout(id = request.uri),
+            location = locSeq
+          )
+          Ok(views.html.site.applicant_post.add.Main(vv, formForApplicantPost))
+        }
+      }
+    )
+  }
 
   def edit(id: Long) = TODO
 

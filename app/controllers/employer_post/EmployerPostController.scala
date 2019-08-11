@@ -37,7 +37,7 @@ class EmployerPostController @javax.inject.Inject()(
       employerPost <- employerPostDao.get(id)
       location <- daoLocation.get(employerPost.get.locationId)
       categorySeqId = Seq(employerPost.get.categoryId1, employerPost.get.categoryId2, employerPost.get.categoryId3)
-      categorys <- categoryDao.filterSeqId(categorySeqId)
+      categorys <- categoryDao.filterSeqId(categorySeqId.flatten)
     } yield {
       val vv = SiteViewValueEmployerPostShow(
         layout = ViewValuePageLayout(id = request.uri),

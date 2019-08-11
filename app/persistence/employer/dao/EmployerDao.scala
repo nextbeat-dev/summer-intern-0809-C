@@ -8,8 +8,8 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
 import persistence.employer.model.Employer
 import persistence.employer.model.Employer.Id
+import persistence.employer.model.EmployerLogin.Id
 import persistence.geo.model.Location
-
 // DAO: 施設情報
 //~~~~~~~~~~~~~~~~~~
 class EmployerDAO @javax.inject.Inject()(
@@ -21,15 +21,6 @@ class EmployerDAO @javax.inject.Inject()(
   lazy val slick = TableQuery[EmployerTable]
 
   // --[ データ処理定義 ] ------------------------------------------------------
-  /**
-   * 施設を取得
-   */
-  def get(id: Employer.Id): Future[Option[Employer]] =
-    db.run {
-      slick
-        .filter(_.id === id)
-        .result.headOption
-    }
 
   /**
     * ユーザ情報を追加する
@@ -42,6 +33,16 @@ class EmployerDAO @javax.inject.Inject()(
           new IllegalArgumentException ("The given object is already assigned id.")
         )
       }
+    }
+
+  /**
+   * 応募者情報
+   */
+  def get(id: Employer.Id): Future[Option[Employer]] =
+    db.run {
+      slick
+        .filter(_.id === id)
+        .result.headOption
     }
 
   // --[ テーブル定義 ] --------------------------------------------------------
@@ -59,6 +60,9 @@ class EmployerDAO @javax.inject.Inject()(
     def score       = column[Int]           ("score")
     def updatedAt   = column[LocalDateTime] ("updated_at")
     def createdAt   = column[LocalDateTime] ("created_at")
+
+    // Indexes
+    def ukey01 = index("ukey01", email, unique = true)
 
     type TableElementTuple = (
       Id, Location.Id, String, String, String, String, String, String, Int, LocalDateTime, LocalDateTime

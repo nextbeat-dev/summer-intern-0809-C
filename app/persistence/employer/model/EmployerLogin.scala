@@ -8,6 +8,10 @@
 package persistence.employer.model
 
 import java.time.LocalDateTime
+import persistence.geo.model.Location
+import play.api.data.Form
+import play.api.data.Forms._
+import play.api.data.Forms.mapping
 
 // 募集者ログイン情報
 //~~~~~~~~~~~~~
@@ -20,3 +24,23 @@ case class EmployerLogin(
 )
 
 
+object EmployerLogin {
+  // --[ 管理ID ]---------------------------------------------------------------
+  type Id = Long
+
+  def applyForLogin(
+    email: String,
+    password: String
+  ): EmployerLogin = EmployerLogin(None, email, password)
+
+  // --[ フォーム定義 ]---------------------------------------------------------
+  val formForEmployerLogin = Form(
+    mapping(
+      "email"    -> nonEmptyText,
+      "password" -> nonEmptyText,
+    )(EmployerLogin.applyForLogin)(EmployerLogin.unapply(_).map(
+      t => (t._2, "")
+    ))
+  )
+
+}

@@ -6,8 +6,8 @@ import persistence.employer.model.{Employer, EmployerLogin}
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
 import slick.jdbc.JdbcProfile
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 // DAO: 施設情報
 //~~~~~~~~~~~~~~~~~~
@@ -69,7 +69,7 @@ class EmployerLoginDAO @javax.inject.Inject()(
     def updatedAt = column[LocalDateTime] ("updated_at")
     def createdAt = column[LocalDateTime] ("created_at")
 
-    def ukey01 = index("employer_login_ukey01", eid, unique = true)
+    def ukey01 = index("ukey01", eid, unique = true)
 
     // The * projection of the table
     def * = (
@@ -79,7 +79,7 @@ class EmployerLoginDAO @javax.inject.Inject()(
       (EmployerLogin.apply _).tupled,
       /** The bidirectional mappings : Model => Tuple(table) */
       (v: TableElementType) => EmployerLogin.unapply(v).map(_.copy(
-        _5 = LocalDateTime.now
+        _4 = LocalDateTime.now
       ))
     )
   }

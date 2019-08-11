@@ -1,13 +1,12 @@
 package persistence.applicant_post.dao
 
-import java.time.LocalDateTime
-import java.time.LocalDate
-import scala.concurrent.Future
+import java.time.{LocalDate, LocalDateTime, ZoneId}
+import java.util.Date
 
+import scala.concurrent.Future
 import slick.jdbc.JdbcProfile
 import play.api.db.slick.DatabaseConfigProvider
 import play.api.db.slick.HasDatabaseConfigProvider
-
 import persistence.applicant_post.model.ApplicantPost
 import persistence.geo.model.Location
 import persistence.applicant.model.Applicant
@@ -27,9 +26,9 @@ class ApplicantPostDAO @javax.inject.Inject()(
   /**
    * 施設を取得
    */
-  def get(id: ApplicantPost.Id): Future[Option[ApplicantPost]] =
-    db.run {
-      slick
+  def get(id: ApplicantPost.Id): Future[Option[ApplicantPost]] = 
+   db.run {
+    slick
         .filter(_.id === id)
         .result.headOption
     }
@@ -40,6 +39,35 @@ class ApplicantPostDAO @javax.inject.Inject()(
   def findAll: Future[Seq[ApplicantPost]] =
     db.run {
       slick.result
+    }
+  
+  def create(data: ApplicantPost): Future[ApplicantPost.Id] =
+    db.run {
+      data.id match {
+        case None    => slick returning slick.map(_.id) += data
+        case Some(_) => DBIO.failed(
+          new IllegalArgumentException("The given object is already assigned id.")
+        )
+      }
+    }
+  
+  def update(id: Long, title: String, destination: String, description: String):  Unit  = 
+    db.run {
+      slick
+        .filter(_.id === id)
+        .map(
+          p => (p.title, p.destination, p.description)        
+        )
+        .update((
+          title, destination, description
+        ))
+    }    
+
+  def delete(id: Long): Unit = 
+    db.run {
+      slick
+        .filter(_.id === id)
+        .delete
     }
 
   /**
@@ -72,6 +100,18 @@ class ApplicantPostDAO @javax.inject.Inject()(
     def updatedAt     = column[LocalDateTime]    ("updated_at")
     def createdAt     = column[LocalDateTime]    ("created_at")
 
+    def date2LocalDate(date: Date): LocalDate = {
+      date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    } 
+
+    def localDate2Date(localDate: LocalDate): Date = {
+      Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+  type TableElementTuple = (
+    ApplicantPost.Id, Applicant.Id, Location.Id, String, String, String,
+    Category.Id, Category.Id, Category.Id, Boolean, LocalDate, LocalDateTime, LocalDateTime
+  )
     // The * projection of the table
     def * = (
       id.?, applicant_id, locationId, title, destination, description,

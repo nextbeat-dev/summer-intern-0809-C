@@ -2,9 +2,7 @@ package model.site.app
 
 import model.component.util.ViewValuePageLayout
 import persistence.category.model.Category
-
-import persistence.applicant_post.model.ApplicantItem
-import persistence.applicant_post.model.ApplicantPost
+import persistence.applicant_post.model.{ApplicantItem, ApplicantPost}
 import persistence.geo.model.Location
 
 // 応募者
@@ -16,8 +14,12 @@ case class SiteViewValueApplicantPostIndex(
 
 case class SiteViewValueApplicantPostShow(
   layout:   ViewValuePageLayout,
-  posts: ApplicantPost,
+  post: ApplicantPost,
   location: Location,
   categorys: Seq[Category]
 )
 
+case class SiteViewValueApplicantPost(
+  layout: ViewValuePageLayout,
+  location: Seq[Location]
+)

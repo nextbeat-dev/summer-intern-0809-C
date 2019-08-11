@@ -9,8 +9,8 @@ package persistence.applicant_post.model
 
 import play.api.data._
 import play.api.data.Forms._
-import java.time.LocalDateTime
-import java.time.LocalDate
+import java.time.{LocalDate, LocalDateTime, ZoneId}
+import java.util.Date
 
 import persistence.geo.model.Location
 import persistence.applicant.model.Applicant
@@ -48,6 +48,7 @@ case class ApplicantItem(
 //   locationIdOpt: Option[Location.Id]
 // )
 
+
 // コンパニオンオブジェクト
 //~~~~~~~~~~~~~~~~~~~~~~~~~~
 object ApplicantPost {
@@ -55,11 +56,41 @@ object ApplicantPost {
   // --[ 管理ID ]---------------------------------------------------------------
   type Id = Long
 
-  // --[ フォーム定義 ]---------------------------------------------------------
-  // val formForApplicantPostSearch = Form(
-  //   mapping(
-  //     "locationId" -> optional(text),
-  //   )(ApplicantPostSearch.apply)(ApplicantPostSearch.unapply)
-  // )
-}
+  def date2LocalDate(date: Date): LocalDate =
+    return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 
+  def localDate2Date(localDate: LocalDate): Date =
+    return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant())
+
+
+  def applyForm(
+    applicantId: Applicant.Id,
+    locationId: Location.Id,
+    title: String,
+    destination: String,
+    description: String,
+    categoryId1: Category.Id,
+    categoryId2: Category.Id,
+    categoryId3: Category.Id,
+    free_date: Date
+  ) = ApplicantPost(
+    None, applicantId, locationId, title, destination, description,
+    categoryId1, categoryId2, categoryId3, false, date2LocalDate(free_date)
+  )
+
+  val formForApplicantPost = Form(
+    mapping(
+      "applicantId" -> longNumber,
+      "locationId" -> nonEmptyText,
+      "title"      -> nonEmptyText,
+      "destination"    -> nonEmptyText,
+      "description"-> text,
+      "categoryId1"-> longNumber,
+      "categoryId2"-> longNumber,
+      "categoryId3"-> longNumber,
+      "free_date"   -> date
+    )(ApplicantPost.applyForm)(ApplicantPost.unapply(_).map(
+      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, localDate2Date(t._11))
+    ))
+  )
+}

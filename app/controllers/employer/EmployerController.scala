@@ -14,6 +14,10 @@ import persistence.employer.model.Employer.formForNewEmployer
 import persistence.employer.model.EmployerLogin
 import persistence.geo.dao.LocationDAO
 import persistence.geo.model.Location
+import persistence.geo.dao.LocationDAO
+import persistence.geo.model.Location
+import persistence.employer.model.Employer.formForNewEmployer
+import persistence.employer.model.EmployerLogin
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
 
@@ -73,7 +77,7 @@ cc: MessagesControllerComponents
           // TODO: セッション追加処理
           Redirect("/applicant_post")
             .withSession(
-              request.session + ("id" -> eid.toString)
+              request.session + ("eid" -> eid.toString)
             )
         }
       }
