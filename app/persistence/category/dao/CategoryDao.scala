@@ -48,7 +48,7 @@ class CategoryDAO @javax.inject.Inject()(
     }
 
 // --[ テーブル定義 ] --------------------------------------------------------
-  class CategoryTable(tag: Tag) extends Table[Category](tag, "applicant_post") {
+  class CategoryTable(tag: Tag) extends Table[Category](tag, "category") {
 
 
     // Table's columns

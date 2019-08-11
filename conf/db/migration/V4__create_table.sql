@@ -1,4 +1,4 @@
-CREATE TABLE "applicant" (
+CREATE TABLE IF NOT EXISTS "applicant" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   "location_id" VARCHAR(8)   NOT NULL,
   "name"        VARCHAR(255) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE "applicant" (
   "created_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-CREATE TABLE "employer" (
+CREATE TABLE IF NOT EXISTS "employer" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   "location_id" VARCHAR(8)   NOT NULL,
   "name"        VARCHAR(255) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE "employer" (
 ) ENGINE=InnoDB;
 
 
-CREATE TABLE "applicant_post" (
+CREATE TABLE IF NOT EXISTS "applicant_post" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   "applicant_id"  INT          NOT NULL,
   "location_id" VARCHAR(8)   NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE "applicant_post" (
   "created_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-CREATE TABLE "employer_post" (
+CREATE TABLE IF NOT EXISTS "employer_post" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   "employer_id"  INT          NOT NULL,
   "location_id" VARCHAR(8)   NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE "employer_post" (
   "created_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-CREATE TABLE "category" (
+CREATE TABLE IF NOT EXISTS "category" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   "name"        VARCHAR(255) NOT NULL,  
   "description" TEXT         DEFAULT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE "category" (
 ) ENGINE=InnoDB;
 
 -- applicantがしたフィードバック
-CREATE TABLE "applicant_feedback_log" (
+CREATE TABLE IF NOT EXISTS "applicant_feedback_log" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   "employer_id" INT          NOT NULL,
   "applicant_id"INT          NOT NULL,
@@ -81,33 +81,11 @@ CREATE TABLE "applicant_feedback_log" (
 ) ENGINE=InnoDB;
 
 -- employerがしたフィードバック
-CREATE TABLE "employer_feedback_log" (
+CREATE TABLE IF NOT EXISTS "employer_feedback_log" (
   "id"          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
   "employer_id" INT          NOT NULL,
   "applicant_id"INT          NOT NULL,
   "score"       Int         DEFAULT NULL,
   "updated_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   "created_at"  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
-
-CREATE TABLE IF NOT EXISTS "geo_location" (
-  "id"         varchar(8)  NOT     NULL PRIMARY KEY,
-  "level"      TINYINT     NOT     NULL,
-  "typedef"    TINYINT     NOT     NULL,
-  "parent"     varchar(8)  DEFAULT NULL,
-  "urn"        varchar(64) DEFAULT NULL,
-  "region"     varchar(32) NOT     NULL,
-  "region_en"  varchar(32) DEFAULT NULL,
-  "pref"       varchar(32) NOT     NULL,
-  "pref_en"    varchar(32) DEFAULT NULL,
-  "city"       varchar(32) DEFAULT NULL,
-  "city_en"    varchar(32) DEFAULT NULL,
-  "ward"       varchar(32) DEFAULT NULL,
-  "ward_en"    varchar(32) DEFAULT NULL,
-  "county"     varchar(32) DEFAULT NULL,
-  "county_en"  varchar(32) DEFAULT NULL,
-  "updated_at" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  "created_at" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY "geo_location_ukey01" ("urn"),
-         KEY "geo_location_key01"  ("parent")
 ) ENGINE=InnoDB;

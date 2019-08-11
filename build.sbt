@@ -76,6 +76,7 @@ flywayUrl       := "jdbc:h2:tcp://localhost/./nextbeat;MODE=MySQL"
 flywayUser      := "nextbeat"
 flywayPassword  := "pass"
 flywayLocations += "db/migration"
+flywayBaselineOnMigrate := true
 
 // Setting for prompt
 import com.scalapenos.sbt.prompt._

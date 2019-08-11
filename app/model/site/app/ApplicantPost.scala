@@ -17,7 +17,7 @@ case class SiteViewValueApplicantPostShow(
   layout:   ViewValuePageLayout,
   post: ApplicantPost,
   location: Location,
-  categorys: Seq[Category]
+  // categorys: Seq[Category]
 )
 
 case class SiteViewValueApplicantPost(

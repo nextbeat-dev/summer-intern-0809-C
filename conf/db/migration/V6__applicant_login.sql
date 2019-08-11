@@ -1,10 +1,10 @@
-CREATE TABLE "employer_login" (
-  "eid"        INT AUTO_INCREMENT(1),
+CREATE TABLE IF NOT EXISTS "applicant_login" (
+  "aid"        INT AUTO_INCREMENT(1),
   "email"      VARCHAR(255) NOT NULL,
   "password"   VARCHAR(255) NOT NULL,
   "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
   "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  PRIMARY KEY ("eid"),
-  UNIQUE KEY "ukey02" ("email")
+  PRIMARY KEY ("aid"),
+  UNIQUE KEY "ukey01" ("email")
 )
 

@@ -1,7 +1,7 @@
 
 -- ユーザ定義
 --------------
-CREATE TABLE "udb_user" (
+CREATE TABLE IF NOT EXISTS "udb_user" (
   "id"         INT          NOT     NULL AUTO_INCREMENT PRIMARY KEY,
   "name_first" VARCHAR(255) NOT     NULL,
   "name_last"  VARCHAR(255) NOT     NULL,
@@ -14,7 +14,7 @@ CREATE TABLE "udb_user" (
 
 -- ユーザ・セッション
 ----------------------
-CREATE TABLE "udb_user_session" (
+CREATE TABLE IF NOT EXISTS "udb_user_session" (
   "id"         INT         NOT NULL PRIMARY KEY,
   "token"      VARCHAR(64) NOT NULL,
   "exprity"    TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,

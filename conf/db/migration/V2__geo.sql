@@ -1,6 +1,7 @@
 
 -- 地域情報
 --------------
+DROP TABLE "geo_location";
 CREATE TABLE "geo_location" (
   "id"         varchar(8)  NOT     NULL PRIMARY KEY,
   "level"      TINYINT     NOT     NULL,
