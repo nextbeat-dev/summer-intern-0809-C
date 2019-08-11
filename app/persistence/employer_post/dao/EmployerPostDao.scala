@@ -38,7 +38,7 @@ class EmployerPostDAO @javax.inject.Inject()(
    */
   def findAll: Future[Seq[EmployerPost]] =
     db.run {
-      slick.result
+      slick.sortBy(_.id.desc).result
     }
   
   def create(data: EmployerPost): Future[EmployerPost.Id] =

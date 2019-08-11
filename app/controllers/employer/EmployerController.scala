@@ -10,10 +10,6 @@ package controllers.employer
 import model.component.util.ViewValuePageLayout
 import model.site.app.SiteViewValueNewEmployer
 import persistence.employer.dao.{EmployerDAO, EmployerLoginDAO}
-import persistence.employer.model.Employer.formForNewEmployer
-import persistence.employer.model.EmployerLogin
-import persistence.geo.dao.LocationDAO
-import persistence.geo.model.Location
 import persistence.geo.dao.LocationDAO
 import persistence.geo.model.Location
 import persistence.employer.model.Employer.formForNewEmployer
@@ -21,6 +17,10 @@ import persistence.employer.model.EmployerLogin
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
 import model.site.app.SiteViewValueEmployerShow
+import mvc.action.AuthenticationAction
+import play.api.mvc.Results.Redirect
+
+import scala.concurrent.Future
 
 
 // 登録: 新規ユーザー
@@ -32,6 +32,9 @@ val daoEmployerLogin: EmployerLoginDAO,
 cc: MessagesControllerComponents
 ) extends AbstractController(cc) with I18nSupport {
   implicit lazy val executionContext = defaultExecutionContext
+
+  val userTypeApplicant = 0
+  val userTypeEmployer  = 1
 
   /**
    * 新規登録ページ
@@ -57,7 +60,6 @@ cc: MessagesControllerComponents
         for {
           locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
         } yield {
-          println(errors)
           val vv = SiteViewValueNewEmployer(
             layout   = ViewValuePageLayout(id = request.uri),
             location = locSeq
@@ -77,7 +79,7 @@ cc: MessagesControllerComponents
           )
         } yield {
           // TODO: セッション追加処理
-          Redirect("/applicant_post")
+          Redirect(s"/employer/$eid")
             .withSession(
               request.session + ("eid" -> eid.toString)
             )
@@ -86,11 +88,22 @@ cc: MessagesControllerComponents
     )
   }
 
-  def show(id: Long) = Action { implicit request =>
-    val vv = SiteViewValueEmployerShow(
-      layout   = ViewValuePageLayout(id = request.uri),
-    )
-    Ok(views.html.site.employer.show.Main(vv))
+  def show(id: Long) = (Action andThen AuthenticationAction(userTypeEmployer)).async { implicit request =>
+    val eid = request.session.get("eid")
+    eid match {
+      case Some(x) => {
+        if(x.toLong == id){
+          val vv = SiteViewValueEmployerShow(
+            layout   = ViewValuePageLayout(id = request.uri),
+          )
+          Future(Ok(views.html.site.employer.show.Main(vv)))
+        } else {
+          Future(Redirect("/", 301))
+        }
+      }
+      case None => Future(Redirect("/", 301))
+    }
+
   }
 
 }

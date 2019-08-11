@@ -26,72 +26,60 @@
   <div class="content__section form">
     @helper.form(action = controllers.employer_post.routes.EmployerPostController.create()) {
 
-      @** 行き先 location_id *@
+      <input type="hidden" value="@vv.eid" name="employerId">
+
+      @** 日程 free_date *@
+      <div class="form__section pref">
+        @helper.inputDate(
+        field   = form("job_date"),
+        '_label           -> "日程(free day)",
+        '_showConstraints -> false
+        )
+      </div>
+
+      @** 募集地 location_id *@
       <div class="form__section pref">
         @helper.select(
-          field   = form("pref"),
+          field   = form("locationId"),
           options = vv.location.map(v => (v.id, v.namePref)),
-          '_label           -> "行き先:都道府県(location)",
+          '_label           -> "募集地",
           '_showConstraints -> false
         )
       </div>
 
-      @** 日程 free_date *@
-      <!-- <div class="form__section pref">
-        @helper.inputDate(
-          field   = form("job_date"),
-          '_label           -> "日程(free day)",
-          '_showConstraints -> false
+      @** 住所 address *@
+      <div class="form__section address">
+        @helper.inputText(
+        form("address"),
+        '_label           -> "住所",
+        '_showConstraints -> false
         )
-      </div> -->
+      </div>
 
-
-      @** 希望の仕事(category_id_1~3) *@
-      <!-- <div class="form__section pref">
-        @helper.inputRadioGroup(
-          field = form("category"),
-          options = Seq("0"->"農業","1"->"水産業","2"->"林業"),
-          '_label -> "希望の仕事",
-          'name -> "category",
-        
+      @** 募集タイトル title *@
+      <div class="form__section common">
+        @helper.inputText(
+        form("title"),
+        '_label           -> "募集タイトル",
+        '_showConstraints -> false
         )
-      </div>  -->
-      <!-- <div>
-        <input type="radio" name="category" value="1" checked id="radio01" />
-        <label for="radio01" class="radio">農業</label>
-    
-        <input type="radio" name="category" value="2" id="radio02" />
-        <label for="radio02" class="radio">水産業</label>
-    
-        <input type="radio" name="category" value="3" id="radio03" />
-        <label for="radio03" class="radio">林業</label>  
+      </div>
 
-      </div> -->
-
-      @** 一言 title *@
-      <div class="form__section name-container">
-        <span class="form__section name">
-          @helper.inputText(
-            form("title"),
-            '_label           -> "コメント(comment)",
-            '_showConstraints -> false
-          )
-        </span>
-        <!-- <span class="form__section name">
-          @helper.inputText(
-            form("nameFirst"),
-            '_label           -> "名前(名)",
-            '_showConstraints -> false
-          )
-        </span> -->
+      @** 日当 price *@
+      <div class="form__section common-min">
+        @helper.inputText(
+        form("price"),
+        '_label           -> "日当(円)",
+        '_showConstraints -> false
+        )
       </div>
 
       @** 詳細 description *@
-      <div class="form__section email">
-        @helper.inputText(
-          form("description"),
-          '_label           -> "募集詳細(description)",
-          '_showConstraints -> false
+      <div class="form__section description">
+        @helper.textarea(
+        form("description"),
+        '_label           -> "詳細説明",
+        '_showConstraints -> false
         )
       </div>
 

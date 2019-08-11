@@ -66,15 +66,13 @@ object EmployerPost {
     title: String,
     address: String,
     description: String,
-    main_image:  String,
-    thumbnail_image : String,
     price      : Int,
     categoryId1: Option[Category.Id],
     categoryId2: Option[Category.Id],
     categoryId3: Option[Category.Id],
     job_date: Date
   ) = EmployerPost(
-    None, employerId, locationId, title, address, description, main_image, thumbnail_image, price,
+    None, employerId, locationId, title, address, description, "", "", price,
     categoryId1, categoryId2, categoryId3, false, date2LocalDate(job_date)
   )
 
@@ -85,15 +83,13 @@ object EmployerPost {
       "title"      -> nonEmptyText,
       "address"    -> nonEmptyText,
       "description"-> text,
-      "main_image" -> text,
-      "thumbnail_image"-> text,
       "price"      -> number(min = 0),
       "categoryId1"-> optional(longNumber),
       "categoryId2"-> optional(longNumber),
       "categoryId3"-> optional(longNumber),
       "job_date"   -> date
     )(EmployerPost.applyForm)(EmployerPost.unapply(_).map(
-      t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, t._10, t._11, t._12, localDate2Date(t._14))
+      t => (t._2, t._3, t._4, t._5, t._8, t._9, t._10, t._11, t._12, localDate2Date(t._14))
     ))
   )
 }

@@ -11,11 +11,15 @@ case class ApplicantRequest[A](
   request: Request[A]
 ) extends WrappedRequest[A](request)
 
-case class AuthenticationAction()(implicit val executionContext: ExecutionContext
+case class AuthenticationAction(userType: Int)(implicit val executionContext: ExecutionContext
 ) extends ActionRefiner[Request, ApplicantRequest] {
 
+  val userTypeApplicant = 0
+  val userTypeEmployer  = 1
+
   protected def refine[A](request: Request[A]): Future[Either[Result, ApplicantRequest[A]]] = {
-    val sUserIdOpt = request.session.get("aid")
+    println(request.session)
+    val sUserIdOpt = if(userType==userTypeApplicant)request.session.get("aid") else request.session.get("eid")
     val next = sUserIdOpt match {
       case None          => Left(Redirect("/", 301))
       case Some(sApplicantId) => {

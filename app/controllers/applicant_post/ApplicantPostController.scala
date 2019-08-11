@@ -1,7 +1,10 @@
 package controllers.applicant_post
 
+import mvc.action.AuthenticationAction
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
+
+import scala.concurrent.Future
 // persistence: 永続化
 import persistence.applicant_post.model.ApplicantPost.formForApplicantPost
 import persistence.applicant_post.dao.ApplicantPostDAO
@@ -34,6 +37,9 @@ class ApplicantPostController @javax.inject.Inject()(
 ) extends AbstractController(cc) with I18nSupport {
   implicit lazy val executionContext = defaultExecutionContext
 
+  val userTypeApplicant = 0
+  val userTypeEmployer  = 1
+
   def index = Action.async { implicit request =>
     for {
       applicantPost <- applicantPostDao.findAll
@@ -42,9 +48,9 @@ class ApplicantPostController @javax.inject.Inject()(
     } yield {
       val item = applicantPost.map(p => {
         val location = locations.find(_.id == p.locationId)
-        val category1 = categorys.find(_.id.get == p.categoryId1)
-        val category2 = categorys.find(_.id.get == p.categoryId2)
-        val category3 = categorys.find(_.id.get == p.categoryId3)
+        val category1 = categorys.find(_.id.get == p.categoryId1.getOrElse(0))
+        val category2 = categorys.find(_.id.get == p.categoryId2.getOrElse(0))
+        val category3 = categorys.find(_.id.get == p.categoryId3.getOrElse(0))
         ApplicantItem(
           applicantPost = p,
           locationName = location.map(_.namePref).getOrElse("none"),
@@ -66,61 +72,74 @@ class ApplicantPostController @javax.inject.Inject()(
     for {
       applicantPost <- applicantPostDao.get(id)           
       location <- daoLocation.get(applicantPost.get.locationId)
-    //   categorySeqId = Seq(applicantPost.get.categoryId1, applicantPost.get.categoryId2, applicantPost.get.categoryId3)
-    //   categorys <- categoryDao.filterSeqId(categorySeqId)
+      applicant <- applicantDao.get(applicantPost.get.applicantId)
+      categorySeqId = Seq(applicantPost.get.categoryId1, applicantPost.get.categoryId2, applicantPost.get.categoryId3)
+      categorys <- categoryDao.filterSeqId(categorySeqId.flatten)
     } yield {
-      println(applicantPost) 
       val vv = SiteViewValueApplicantPostShow(
         layout = ViewValuePageLayout(id = request.uri),
         post = applicantPost.get,
         location = location.get,
-        // categorys = categorys
+        applicant = applicant,
+        categorys = categorys
       )
 
       Ok(views.html.site.applicant_post.show.Main(vv))
     }
   }
 
-  def add = Action.async { implicit request =>
-    for {
-      locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
-    } yield {
-      val vv = SiteViewValueApplicantPost(
-        layout   = ViewValuePageLayout(id = request.uri),
-        location = locSeq
-      )
-      Ok(views.html.site.applicant_post.add.Main(vv, formForApplicantPost))
-    }
-  }
-
-  def create = Action.async { implicit request =>   
-    formForApplicantPost.bindFromRequest.fold(
-      errors => {
+  def add = (Action andThen AuthenticationAction(userTypeApplicant)).async { implicit request =>
+    val aid = request.session.get("aid")
+    aid match {
+      case Some(x) => {
         for {
           locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
         } yield {
-          println(errors)
           val vv = SiteViewValueApplicantPost(
             layout   = ViewValuePageLayout(id = request.uri),
-            location = locSeq
-          )
-          BadRequest(views.html.site.applicant_post.add.Main(vv, errors))
-        }
-      },
-      form   => {        
-        for {
-          locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
-          applicant <- applicantDao.get(1)
-          _ <- applicantPostDao.create(form)
-        } yield {          
-          val vv = SiteViewValueApplicantPost(
-            layout   = ViewValuePageLayout(id = request.uri),
-            location = locSeq
+            location = locSeq,
+            aid      = x.toLong
           )
           Ok(views.html.site.applicant_post.add.Main(vv, formForApplicantPost))
         }
       }
-    )
+      case None => {
+        Future(Redirect("/", 301))
+      }
+    }
+  }
+
+  def create = (Action andThen AuthenticationAction(userTypeApplicant)).async { implicit request =>
+    val aid = request.session.get("aid")
+    aid match {
+      case Some(x) =>{
+        formForApplicantPost.bindFromRequest.fold(
+          errors => {
+            for {
+              locSeq <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
+            } yield {
+              val vv = SiteViewValueApplicantPost(
+                layout   = ViewValuePageLayout(id = request.uri),
+                location = locSeq,
+                aid = x.toLong
+              )
+              println(errors)
+              BadRequest(views.html.site.applicant_post.add.Main(vv, errors))
+            }
+          },
+          form   => {
+            for {
+              _ <- applicantPostDao.create(form)
+            } yield {
+              Redirect("/applicant_post")
+            }
+          }
+        )
+      }
+      case None    =>{
+        Future(Redirect("/", 301))
+      }
+    }
   }
 
   def edit(id: Long) = TODO

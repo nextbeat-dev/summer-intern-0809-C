@@ -57,6 +57,9 @@ POST /login/applicant                 controllers.login.LoginController.applican
 GET  /login/employer                  controllers.login.LoginController.employerLogin
 POST /login/employer                  controllers.login.LoginController.employerAuth
 
+# --[ ログアウトページ ]----------------------------------------------------------------
+GET  /logout                          controllers.login.LoginController.logout
+
 # --[ 特集ページ ]--------------------------------------------------------------
 GET  /recruit/intership-for-summer-21 controllers.recruit.InternshipForSummer21Controller.view
 
