@@ -68,9 +68,9 @@ class EmployerPostController @javax.inject.Inject()(
     } yield {
         val item = employerPost.map(p => {
         val location = locations.find(_.id == p.locationId)
-        val category1 = categorys.find(_.id.get == p.categoryId1.get)
-        val category2 = categorys.find(_.id.get == p.categoryId2.get)
-        val category3 = categorys.find(_.id.get == p.categoryId3.get)
+        val category1 = categorys.find(_.id.get == p.categoryId1.getOrElse(0))
+        val category2 = categorys.find(_.id.get == p.categoryId2.getOrElse(0))
+        val category3 = categorys.find(_.id.get == p.categoryId3.getOrElse(0))
         EmployerItem(
           employerPost = p,
           locationName = location.map(_.namePref).getOrElse("none"),
