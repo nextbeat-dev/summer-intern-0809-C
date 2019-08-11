@@ -1,11 +1,11 @@
-#employer-list {
+#applicant-list {
  margin: 0 10vw;   
 }
 
-#employer-list {
+#applicant-list {
 }
 
-.employer-list-container {
+.applicant-list-container {
     padding: 0 2.5vw;
     display: flex;
     flex-wrap: wrap;
@@ -15,14 +15,14 @@
         font-weight: bold;
     }
 
-    .employer-item {
+    .applicant-item {
         width: 13vw;
         height: 40vh;
         // border: black solid 1px;
         margin: 2.5vh 2.5vw;
         // background-color: #fff;
     }
-    .employer-option {
+    .applicant-option {
         padding: 10%;   
         font-size: 90%;
         line-height: 2rem;

@@ -12,44 +12,42 @@
 @(vv: SiteViewValueEmployerPostIndex)(implicit messages: play.api.i18n.Messages)
 
 @** 施設検索一覧 *@
-@views.html.common.layout.InnerContent("site-app-new-user-form", "content") {
+@views.html.common.layout.InnerContent("site-app-new-user-form employer-list", "content") {
   @** --[ 見出し ]---------------------------------------------------------- *@
   <h3 class="content__section header">
     <span class="header__title">求人一覧</span>
   </h3>
 
   @** --[ 一覧 ]-------------------------------------------------------- *@
-  <div class="content__section content">
-    @for(post <- vv.posts) {
-      <article class="facility-list-item">
-        <a href="employer_post/@post.employerPost.id">
-          <div class="item-panel__wrapper">
-            <header class="facility-item__header">
-              <div class="title">
-                @post.employerPost.title
-              </div>
-            </header>
-            <section class="facility-item__content">
-              <div>
-                <div class="item-panel__content">
-                  <div class="address">
-                    <label class="inline">住所:</label>
-                    <p class="inline">
-                      @post.locationName
-                    </p>
-                  </div>
-                  <div class="description">
-                    <label class="inline">備考:</label>
-                    <p class="inline">
-                      @post.employerPost.description
-                    </p>
-                  </div>
+  <div class="employer-list-container">
+      @for(post <- vv.posts) {
+        <article class="employer-item">
+          <a href="employer_post/@post.employerPost.id">
+            @views.html.common.component.image.ResponsiveImage(
+              path    = "site/recruit/internship_for_summer_21/03_mentor-kawai.png",
+              alt     = "未来の「ふつう」を次々と。",
+              classes = "kawai__image"
+            )
+            <div class="item__wrapper">
+              <header class="employer-title">
+                <div class="title">
+                  @post.employerPost.title
                 </div>
-              </div>
-            </section>
-          </div>
-        </a>
-      </article>
-    }
-  </div>
+              </header>
+              <section class="employer-option">
+                <section class="employer-description">
+                  <div>一言:  @post.employerPost.description</div>
+                </section>
+                <div class="employer-location">
+                  <div>場所: @post.locationName</div>
+                </div>
+                <div class="employer-location">
+                  <div>時給: @post.employerPost.price</div>
+                </div>
+              </section>
+            </div>
+          </a>
+        </article>
+      }
+    </div>
 }

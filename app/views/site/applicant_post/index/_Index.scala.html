@@ -12,16 +12,16 @@
 @(vv: SiteViewValueApplicantPostIndex)(implicit messages: play.api.i18n.Messages)
 
 @** 施設検索一覧 *@
-@views.html.common.layout.InnerContent("site-app-new-user-form employer-list", "content") {
+@views.html.common.layout.InnerContent("site-app-new-user-form applicant-list", "content") {
   @** --[ 見出し ]---------------------------------------------------------- *@
   <h3 class="content__section header">
     <span class="header__title">学生一覧</span>
   </h3>
 
   @** --[ 一覧 ]-------------------------------------------------------- *@
-  <div class="employer-list-container">
+  <div class="applicant-list-container">
     @for(post <- vv.posts) {
-      <article class="employer-item">
+      <article class="applicant-item">
         <a href="applicant_post/@post.applicantPost.id">
           @views.html.common.component.image.ResponsiveImage(
             path    = "site/recruit/internship_for_summer_21/03_mentor-kawai.png",
@@ -29,19 +29,19 @@
             classes = "kawai__image"
           )
           <div class="item__wrapper">
-            <header class="employer-title">
+            <header class="applicant-title">
               <div class="title">
                 @post.applicantPost.title
               </div>
             </header>
-            <section class="employer-option">
-              <section class="employer-description">
+            <section class="applicant-option">
+              <section class="applicant-description">
                 <div>一言　:  @post.applicantPost.description</div>
               </section>
-              <div class="employer-location">
+              <div class="applicant-location">
                 <div>行き先: @post.locationName</div>
               </div>
-              <div class="employer-category-list">
+              <div class="applicant-category-list">
                 @if(post.category1 == "None") {
                   <div>@post.category1</div>
                 }
