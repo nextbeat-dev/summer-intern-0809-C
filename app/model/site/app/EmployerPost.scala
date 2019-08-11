@@ -4,6 +4,7 @@ import model.component.util.ViewValuePageLayout
 import persistence.category.model.Category
 
 import persistence.employer_post.model.EmployerPost
+import persistence.employer.model.Employer
 import persistence.geo.model.Location
 
 // 応募者
@@ -17,6 +18,7 @@ case class SiteViewValueEmployerPostShow(
   layout:   ViewValuePageLayout,
   post: EmployerPost,
   location: Location,
+  employer: Option[Employer],
   categorys: Seq[Category]
 )
 
