@@ -1,0 +1,22 @@
+@*
+ * This file is part of the Nextbeat services.
+ *
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
+ *@
+
+@import views.html.helper
+@import model.site.app.SiteViewValueEmployerShow
+@import play.api.data.Form
+
+@()(implicit messages: play.api.i18n.Messages)
+
+@** ユーザー登録フォーム *@
+@views.html.common.layout.InnerContent("site-app-new-applicant-form", "content") {
+  <h3 class="content__section header">
+      <span class="header__title">求人者トップページ</span>
+  </h3>
+
+  <button class="button"><a href="/applicant_post">行き先一覧</a></button>
+  <button class="button"><a href="/employer_post/new">求人投稿</a></button>
+}

@@ -20,6 +20,8 @@ import persistence.employer.model.Employer.formForNewEmployer
 import persistence.employer.model.EmployerLogin
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
+import model.site.app.SiteViewValueEmployerShow
+
 
 // 登録: 新規ユーザー
 //~~~~~~~~~~~~~~~~~~~~~
@@ -82,6 +84,13 @@ cc: MessagesControllerComponents
         }
       }
     )
+  }
+
+  def show(id: Long) = Action { implicit request =>
+    val vv = SiteViewValueEmployerShow(
+      layout   = ViewValuePageLayout(id = request.uri),
+    )
+    Ok(views.html.site.employer.show.Main(vv))
   }
 
 }
