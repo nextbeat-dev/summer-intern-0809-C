@@ -14,11 +14,22 @@
 
 @** ユーザー登録フォーム *@
 @views.html.common.layout.InnerContent("site-app-new-applicant-form", "content") {
-  <h3 class="content__section header">
-      <span class="header__title">ユーザートップページ</span>
-  </h3>
-
-  <button class="button"><a href="/employer_post">求人一覧</a></button>
-  <button class="button"><a href="/applicant_post">学生一覧</a></button>
-  <button class="button"><a href="/applicant_post/new">行き先投稿</a></button>
+  <div id="applicant-show">
+      <div class="applicant-show-img">
+          @views.html.common.component.image.ResponsiveImage(
+            path    = "site/show/town.jpg",
+            alt     = "若者よ、忙しいときだけ手伝って！",
+            classes = "visual__image"
+          )
+        </div>
+    <!-- <h3 class="content__section header">
+        <span class="header__title">ユーザートップページ</span>
+    </h3> -->
+    
+    <div id="applicant-show-button">
+        <button class="button  button_strong"><a href="/employer_post">求人一覧</a></button>
+        <button class="button  button_strong"><a href="/applicant_post">若者一覧</a></button>
+        <button class="button  button_strong"><a href="/applicant_post/new">求人投稿</a></button>
+    </div>
+  </div>
 }

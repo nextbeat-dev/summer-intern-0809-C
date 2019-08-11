@@ -620,6 +620,61 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 50px;
     text-align: center; }
 
+#applicant-show {
+  height: 100vh; }
+
+.applicant-show-img {
+  position: relative;
+  z-index: -10;
+  width: 100vw;
+  opacity: 0.7; }
+  .applicant-show-img img {
+    width: 100vw;
+    top: -20vh;
+    position: absolute; }
+
+#applicant-show-button {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #applicant-show-button button {
+    margin: 40vh 5vw 0 5vw;
+    width: 15vw;
+    height: 10vh; }
+
+.button_strong {
+  font-size: 150%; }
+
+#employer-show {
+  height: 100vh; }
+
+.employer-show-img {
+  position: relative;
+  z-index: -10;
+  width: 100vw;
+  opacity: 0.7; }
+  .employer-show-img img {
+    width: 100vw;
+    top: -20vh;
+    position: absolute; }
+
+#employer-show-button {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #employer-show-button button {
+    margin: 40vh 5vw 0 5vw;
+    width: 15vw;
+    height: 10vh; }
+
+.button_strong {
+  font-size: 150%; }
+
+.employer-show-header {
+  text-align: center;
+  margin-top: 10vh;
+  font-size: 300%; }
+
 #site-facility-list .content__section .inline {
   display: inline-block; }
 
