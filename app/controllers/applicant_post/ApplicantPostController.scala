@@ -66,15 +66,17 @@ class ApplicantPostController @javax.inject.Inject()(
     for {
       applicantPost <- applicantPostDao.get(id)           
       location <- daoLocation.get(applicantPost.get.locationId)
-    //   categorySeqId = Seq(applicantPost.get.categoryId1, applicantPost.get.categoryId2, applicantPost.get.categoryId3)
-    //   categorys <- categoryDao.filterSeqId(categorySeqId)
+      applicant <- applicantDao.get(applicantPost.get.applicantId)
+      categorySeqId = Seq(applicantPost.get.categoryId1, applicantPost.get.categoryId2, applicantPost.get.categoryId3)
+      categorys <- categoryDao.filterSeqId(categorySeqId)
     } yield {
       println(applicantPost) 
       val vv = SiteViewValueApplicantPostShow(
         layout = ViewValuePageLayout(id = request.uri),
         post = applicantPost.get,
         location = location.get,
-        // categorys = categorys
+        applicant = applicant,
+        categorys = categorys
       )
 
       Ok(views.html.site.applicant_post.show.Main(vv))

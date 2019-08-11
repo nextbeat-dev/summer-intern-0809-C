@@ -18,19 +18,31 @@
   </h3>
   <table align="center" class="detail_table">
     <tr>
-      <th>名前</th>
-      <td>さとう</td>
+      <th>氏名</th>
+      <td>@vv.applicant.get.name</td>
     </tr>
-  
     <tr>
-      <th>行く予定の場所</th>
+        <th>タイトル</th>
+        <td>@vv.post.title</td>
+      </tr>  
+    <tr>
+      <th>行ける場所</th>
       <td>@vv.post.destination</td>
     </tr>
-  
+    <tr>
+        <th>行ける時期</th>
+        <td>@vv.post.free_date</td>
+      </tr>
     <tr>
       <th>アピール</th>
       <td>@vv.post.description</td>
     </tr>
+    @for(category <- vv.categorys) {
+    <tr>
+        <th>職種の希望</th>
+        <td>@category.name</td>
+    </tr>
+    }
   </table>
 }
 
