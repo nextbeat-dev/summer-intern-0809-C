@@ -12,8 +12,8 @@
 
   @** タイトル *@
   <div class="content__section title">
-    <h3  class="title__section main">FLOW</h3>
-    <div class="title__section sub">選考フロー</div>
+    <h3  class="title__section main">OFFER</h3>
+    <div class="title__section sub">求人の流れ</div>
   </div>
 
   @** フロー *@
@@ -21,37 +21,75 @@
     <ol class="data-list__inner">
       @** Step1 *@
       <li class="data-list__item step-1">
-        <div class="flow__content">エントリーシート選考</div>
+        <div class="flow__content">求人</div>
       </li>
       @** Step2 *@
       <li class="data-list__item step-2">
-        <div class="flow__content">グループ選考</div>
+        <div class="flow__content">求人マッチ</div>
       </li>
       @** Step3 *@
       <li class="data-list__item step-3">
-        <div class="flow__content">個別面談</div>
+        <div class="flow__content">連絡やりとり</div>
       </li>
       @** Step4 *@
       <li class="data-list__item step-4">
-        <div class="flow__content">インターン参加</div>
+        <div class="flow__content">働く</div>
       </li>
     </ol>
   </div>
 
-  @** エンジニア *@
-  <div class="content__section guide">
-    <p class="guide__message">
-      ※エンジニアのサマーインターンもご用意しております。
-    </p>
-  </div>
-
   @** エントリーボタン *@
   <div class="content__secion action">
-    <div class="action__message">SUMMER INTERNSHIP 2019</div>
-    @views.html.common.component.button.FlatButton(
-      classes    = "action__to-entry accent",
-      title      = "ENTRY",
-      navigateTo = "https://recruit.jobcan.jp/nextbeat/entry/new/42680"
-    )
+    <div id="container">
+      <div class="action__message1" id="item1">
+        <div>求人をだす(雇用者)</div>
+        @views.html.common.component.button.FlatButton(
+          classes    = "action__to-entry accent",
+          title      = "新規登録",
+          navigateTo = "/employer/new-employer"
+        )
+      </div> 
+      <div class="action__message1" id="item2">
+        @views.html.common.component.button.FlatButton(
+          classes    = "action__to-entry accent",
+          title      = "ログイン",
+          navigateTo = "/login/employer"
+        )
+      </div>
+      <div class="action__message1" id="item3">
+          <div>求人に応募する(労働者)</div>
+          @views.html.common.component.button.FlatButton(
+            classes    = "action__to-entry accent",
+            title      = "新規登録",
+            navigateTo = "/app/new-user"
+          )
+      </div>
+      <div class="action__message1" id="item4">
+        @views.html.common.component.button.FlatButton(
+          classes    = "action__to-entry accent",
+          title      = "ログイン",
+          navigateTo = "/login/applicant"
+        )
+      </div>
+      </div>
   </div>
+  <!-- <div class="content__secion action">
+    <div class="column">
+      <div class="action__message1">
+        <div>求人に応募する(労働者)</div>
+        @views.html.common.component.button.FlatButton(
+          classes    = "action__to-entry accent",
+          title      = "新規登録",
+          navigateTo = "https://recruit.jobcan.jp/nextbeat/entry/new/42680"
+        )
+      </div> 
+      <div class="action__message2">
+        @views.html.common.component.button.FlatButton(
+          classes    = "action__to-entry accent",
+          title      = "ログイン",
+          navigateTo = "https://recruit.jobcan.jp/nextbeat/entry/new/42680"
+        )
+      </div>
+    </div>
+  </div> -->
 }
