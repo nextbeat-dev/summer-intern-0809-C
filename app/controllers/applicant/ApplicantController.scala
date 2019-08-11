@@ -10,6 +10,7 @@ package controllers.applicant
 import model.component.util.ViewValuePageLayout
 import model.site.app.SiteViewValueNewApplicant
 import model.site.app.SiteViewValueApplicantShow
+import mvc.action.AuthenticationAction
 import persistence.applicant.dao.{ApplicantDAO, ApplicantLoginDAO}
 import persistence.geo.dao.LocationDAO
 import persistence.geo.model.Location
@@ -17,6 +18,8 @@ import persistence.applicant.model.Applicant.formForNewApplicant
 import persistence.applicant.model.ApplicantLogin
 import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
+
+import scala.concurrent.Future
 
 // 登録: 新規ユーザー
 //~~~~~~~~~~~~~~~~~~~~~
@@ -27,6 +30,9 @@ val daoApplicantLogin: ApplicantLoginDAO,
 cc: MessagesControllerComponents
 ) extends AbstractController(cc) with I18nSupport {
   implicit lazy val executionContext = defaultExecutionContext
+
+  val userTypeApplicant = 0
+  val userTypeEmployer  = 1
 
   /**
    * 新規登録ページ
@@ -71,7 +77,7 @@ cc: MessagesControllerComponents
           )
         } yield {
           // TODO: セッション追加処理
-          Redirect("/employer_post")
+          Redirect(s"/applicant/$aid")
             .withSession(
               request.session + ("aid" -> aid.toString)
             )
@@ -80,12 +86,21 @@ cc: MessagesControllerComponents
     )
   }
 
-  def show(id: Long) = Action { implicit request =>
-    val vv = SiteViewValueApplicantShow(
-      layout   = ViewValuePageLayout(id = request.uri)
-    )
-
-    Ok(views.html.site.applicant.show.Main(vv))
+  def show(id: Long) = (Action andThen AuthenticationAction(userTypeApplicant)).async { implicit request =>
+    val aid = request.session.get("aid")
+    aid match {
+      case Some(x) => {
+        if(x.toLong == id){
+          val vv = SiteViewValueApplicantShow(
+            layout   = ViewValuePageLayout(id = request.uri),
+          )
+          Future(Ok(views.html.site.applicant.show.Main(vv)))
+        } else {
+          Future(Redirect("/", 301))
+        }
+      }
+      case None => Future(Redirect("/", 301))
+    }
   }
 
 }

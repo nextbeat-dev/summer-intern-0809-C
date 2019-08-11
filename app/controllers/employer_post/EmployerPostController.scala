@@ -20,6 +20,8 @@ import model.site.app.SiteViewValueEmployerPostShow
 
 import model.site.app.SiteViewValueEmployerPost
 import model.component.util.ViewValuePageLayout
+import persistence.employer_post.model.EmployerItem
+
 
 
 // 施設
@@ -60,13 +62,29 @@ class EmployerPostController @javax.inject.Inject()(
 
   def index = Action.async { implicit request =>
     for {
-        postSeq <- employerPostDao.findAll
+        employerPost <- employerPostDao.findAll
+        categorys <- categoryDao.findAll
+        locations <- daoLocation.filterByIds(Location.Region.IS_PREF_ALL)
     } yield {
-        val vv = SiteViewValueEmployerPostIndex(
-            layout = ViewValuePageLayout(id = request.uri),
-            posts = postSeq
+        val item = employerPost.map(p => {
+        val location = locations.find(_.id == p.locationId)
+        val category1 = categorys.find(_.id.get == p.categoryId1.get)
+        val category2 = categorys.find(_.id.get == p.categoryId2.get)
+        val category3 = categorys.find(_.id.get == p.categoryId3.get)
+        EmployerItem(
+          employerPost = p,
+          locationName = location.map(_.namePref).getOrElse("none"),
+          category1 = category1.map(_.name).getOrElse("none"),
+          category2 = category2.map(_.name).getOrElse("none"),
+          category3 = category3.map(_.name).getOrElse("none")
         )
-        Ok(views.html.site.employer_post.index.Main(vv))
+      })
+
+      val vv = SiteViewValueEmployerPostIndex(
+        layout = ViewValuePageLayout(id = request.uri),
+        posts = item    
+      )
+      Ok(views.html.site.employer_post.index.Main(vv))
     }
   }
 
