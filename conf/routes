@@ -19,6 +19,7 @@ POST /employer/new-employer         controllers.employer.EmployerController.regi
 # --[ 応募者登録ページ ]----------------------------------------------------------------
 GET  /applicant/new-applicant         controllers.applicant.ApplicantController.newApplicant
 POST /applicant/new-applicant         controllers.applicant.ApplicantController.registerApplicant
+GET  /applicant/:id                   controllers.applicant.ApplicantController.show(id: Long)
 
 # --[ 農家登録ページ ]----------------------------------------------------------------
 GET  /employer/new-employer           controllers.employer.EmployerController.newEmployer

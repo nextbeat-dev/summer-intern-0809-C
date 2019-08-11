@@ -9,6 +9,7 @@ package controllers.applicant
 
 import model.component.util.ViewValuePageLayout
 import model.site.app.SiteViewValueNewApplicant
+import model.site.app.SiteViewValueApplicantShow
 import persistence.applicant.dao.{ApplicantDAO, ApplicantLoginDAO}
 import persistence.geo.dao.LocationDAO
 import persistence.geo.model.Location
@@ -38,7 +39,7 @@ cc: MessagesControllerComponents
         layout   = ViewValuePageLayout(id = request.uri),
         location = locSeq
       )
-      Ok(views.html.site.applicant.Main(vv, formForNewApplicant))
+      Ok(views.html.site.applicant.form.Main(vv, formForNewApplicant))
     }
   }
 
@@ -56,7 +57,7 @@ cc: MessagesControllerComponents
             layout   = ViewValuePageLayout(id = request.uri),
             location = locSeq
           )
-          BadRequest(views.html.site.applicant.Main(vv, errors))
+          BadRequest(views.html.site.applicant.form.Main(vv, errors))
         }
       },
       applicant   => {
@@ -78,6 +79,14 @@ cc: MessagesControllerComponents
         }
       }
     )
+  }
+
+  def show(id: Long) = Action { implicit request =>
+    val vv = SiteViewValueApplicantShow(
+      layout   = ViewValuePageLayout(id = request.uri)
+    )
+
+    Ok(views.html.site.applicant.show.Main(vv))
   }
 
 }

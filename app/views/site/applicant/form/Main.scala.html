@@ -5,12 +5,12 @@
  * please view the LICENSE file that was distributed with this source code.
  *@
 
-@import model.site.app.SiteViewValueApplicantShow
+@import model.site.app.SiteViewValueNewApplicant
 @import persistence.applicant.model.Applicant
 @import play.api.data.Form
 
 @** 応募者登録フォーム *@
-@(vv: SiteViewValueApplicantShow)(implicit messages: play.api.i18n.Messages)
+@(vv: SiteViewValueNewApplicant, form: Form[Applicant])(implicit messages: play.api.i18n.Messages)
 @views.html.common.layout.Default(vv.layout) {
   @views.html.common.layout.ContentLayout(
     id      = "site-app-new-applicant",
@@ -20,5 +20,5 @@
 
 @** テンプレート: コンテンツ *@
 @tplContent = {
-  @views.html.site.applicant.show._Show()
+  @views.html.site.applicant.form._Form(vv, form)
 }

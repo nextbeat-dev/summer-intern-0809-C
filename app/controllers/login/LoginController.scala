@@ -4,7 +4,7 @@ import play.api.i18n.I18nSupport
 import play.api.mvc.{AbstractController, MessagesControllerComponents}
 import persistence.applicant.model.ApplicantLogin.formForApplicantLogin
 import model.component.util.ViewValuePageLayout
-import model.site.app.{SiteViewValueApplicant, SiteViewValueApplicantLogin, SiteViewValueNewUser}
+import model.site.app.{SiteViewValueApplicantShow, SiteViewValueApplicantLogin, SiteViewValueNewUser}
 import persistence.applicant.dao.{ApplicantDAO, ApplicantLoginDAO}
 import persistence.geo.model.Location
 import persistence.udb.dao.UserDAO
