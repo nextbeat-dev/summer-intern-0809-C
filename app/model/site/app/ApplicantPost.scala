@@ -22,6 +22,7 @@ case class SiteViewValueApplicantPostShow(
 )
 
 case class SiteViewValueApplicantPost(
-  layout: ViewValuePageLayout,
-  location: Seq[Location]
+  layout:   ViewValuePageLayout,
+  location: Seq[Location],
+  aid:      Applicant.Id
 )

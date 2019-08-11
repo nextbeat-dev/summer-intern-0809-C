@@ -26,9 +26,9 @@ case class ApplicantPost(
   title:       String,                             // 施設名
   destination: String,                             // 住所(詳細)
   description: String,                             // 施設説明
-  categoryId1: Category.Id,
-  categoryId2: Category.Id,
-  categoryId3: Category.Id,
+  categoryId1: Option[Category.Id],
+  categoryId2: Option[Category.Id],
+  categoryId3: Option[Category.Id],
   done: Boolean,
   free_date: LocalDate,
   updatedAt:   LocalDateTime = LocalDateTime.now,  // データ更新日
@@ -69,9 +69,9 @@ object ApplicantPost {
     title: String,
     destination: String,
     description: String,
-    categoryId1: Category.Id,
-    categoryId2: Category.Id,
-    categoryId3: Category.Id,
+    categoryId1: Option[Category.Id],
+    categoryId2: Option[Category.Id],
+    categoryId3: Option[Category.Id],
     free_date: Date
   ) = ApplicantPost(
     None, applicantId, locationId, title, destination, description,
@@ -81,13 +81,13 @@ object ApplicantPost {
   val formForApplicantPost = Form(
     mapping(
       "applicantId" -> longNumber,
-      "locationId" -> nonEmptyText,
-      "title"      -> nonEmptyText,
-      "destination"    -> nonEmptyText,
-      "description"-> text,
-      "categoryId1"-> longNumber,
-      "categoryId2"-> longNumber,
-      "categoryId3"-> longNumber,
+      "locationId"  -> nonEmptyText,
+      "title"       -> nonEmptyText,
+      "destination" -> nonEmptyText,
+      "description" -> text,
+      "categoryId1" -> optional(longNumber),
+      "categoryId2" -> optional(longNumber),
+      "categoryId3" -> optional(longNumber),
       "free_date"   -> date
     )(ApplicantPost.applyForm)(ApplicantPost.unapply(_).map(
       t => (t._2, t._3, t._4, t._5, t._6, t._7, t._8, t._9, localDate2Date(t._11))

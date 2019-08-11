@@ -107,8 +107,6 @@ class EmployerPostController @javax.inject.Inject()(
         Future(Redirect("/", 301))
       }
     }
-
-
   }
 
   def create = (Action andThen AuthenticationAction(userTypeEmployer)).async { implicit request =>
@@ -141,7 +139,6 @@ class EmployerPostController @javax.inject.Inject()(
         Future(Redirect("/", 301))
       }
     }
-
   }
 
 
