@@ -3,3 +3,6 @@ INSERT INTO "employer"("location_id", "name", "address", "email", "phone") VALUE
 
 delete from "employer_post";
 INSERT INTO "employer_post"("id","employer_id", "location_id", "title", "address", "price", "job_date", "description", "category_id_1", "category_id_2", "category_id_3", "main_image", "thumbnail_image") VALUES ('1', '1','01000','ミカンもぎたい人wanted','北海道', 10000,'2019-09-01', '楽しく稼げる!', 2, 3, 4, 'google.com', 'google.com');
+
+delete from "applicant_post";
+INSERT INTO "applicant_post"("id","applicant_id", "location_id", "title", "destination", "free_date", "description", "category_id_1", "category_id_2", "category_id_3") VALUES ('1', '1','01000','魚釣りたい！','北海道', '2019-09-01', '趣味が釣りの学生です。', 2, 3, 4);
