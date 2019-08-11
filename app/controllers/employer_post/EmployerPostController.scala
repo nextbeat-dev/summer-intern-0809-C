@@ -41,6 +41,7 @@ class EmployerPostController @javax.inject.Inject()(
     for {
       employerPost <- employerPostDao.get(id)
       location <- daoLocation.get(employerPost.get.locationId)
+      employer <- employerDao.get(employerPost.get.employerId)
       categorySeqId = Seq(employerPost.get.categoryId1, employerPost.get.categoryId2, employerPost.get.categoryId3)
       categorys <- categoryDao.filterSeqId(categorySeqId.flatten)
     } yield {
@@ -48,9 +49,11 @@ class EmployerPostController @javax.inject.Inject()(
         layout = ViewValuePageLayout(id = request.uri),
         post = employerPost.get,
         location = location.get,
+        employer = employer,
         categorys = categorys
       )
 
+      println(categorys)
       Ok(views.html.site.employer_post.show.Main(vv))
     }
   }
