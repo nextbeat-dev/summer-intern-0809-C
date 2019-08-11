@@ -12,7 +12,7 @@ import persistence.geo.model.Location
 
 // 応募者
 //~~~~~~~~~~~~~~~~~~~~~
-case class SiteViewValueEmployer(
+case class SiteViewValueEmployerShow(
   layout:   ViewValuePageLayout
 )
 
